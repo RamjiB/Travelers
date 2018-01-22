@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "382436721226",
+    "firebase_url": "https://travelers-b6409.firebaseio.com",
+    "project_id": "travelers-b6409",
+    "storage_bucket": "travelers-b6409.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:382436721226:android:cbf47b9f1b1191a6",
+        "android_client_info": {
+          "package_name": "ramji.travelers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "382436721226-l0thnhii2rcp082vcvi079jav5sam70k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ramji.travelers",
+            "certificate_hash": "47c97567817a4f70a07c0a661627d0d031c56c22"
+          }
+        },
+        {
+          "client_id": "382436721226-7fos41n7mjancpga5kt9vvs24384gh6d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHNY8AjACO1Q9ZLEbkBiW2Wyo_Jz1SY8Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "382436721226-7fos41n7mjancpga5kt9vvs24384gh6d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

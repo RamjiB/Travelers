@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Travelers</string>
+    <string name="posts">Posts</string>
+    <string name="profile">Profile</string>
+    <string name="postedImage">PostImage</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forget_password">forget password?</string>
+    <string name="login">Login</string>
+    <string name="create_a_new_account">Create a new account</string>
+    <string name="signup">signup</string>
+    <string name="full_name">Full Name</string>
 </resources>
