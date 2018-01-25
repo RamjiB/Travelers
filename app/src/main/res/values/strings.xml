@@ -1,13 +1,25 @@
 <resources>
     <string name="app_name">Travelers</string>
+
     <string name="posts">Posts</string>
     <string name="profile">Profile</string>
     <string name="postedImage">PostImage</string>
+
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="forget_password">forget password?</string>
+    <string name="forget_password">Forget/Reset password?</string>
     <string name="login">Login</string>
+
     <string name="create_a_new_account">Create a new account</string>
     <string name="signup">signup</string>
-    <string name="full_name">Full Name</string>
+    <string name="user_name">Name</string>
+    <string name="account_creation_failed">Failed to create account</string>
+    <string name="empty_fields_signup_activity">Fill in all the fields</string>
+    <string name="verification_Email_sent">Verification email sent</string>
+
+    //Firebase Database
+    <string name="dbname_users">users</string>
+    <string name="username">username</string>
+    <string name="field_emailId">emailId</string>
+
 </resources>

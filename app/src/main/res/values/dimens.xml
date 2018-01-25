@@ -9,4 +9,9 @@
     <dimen name="input_type_size">16sp</dimen>
     <dimen name="location_text_size">16sp</dimen>
     <dimen name="location_text_padding">15dp</dimen>
+    <dimen name="signup_activity_top_margin">120dp</dimen>
+    <dimen name="profile_image_padding">5dp</dimen>
+    <dimen name="profile_text_padding">2dp</dimen>
+    <dimen name="profile_name_text_size">16sp</dimen>
+    <dimen name="profile_text_size">14sp</dimen>
 </resources>

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.transition.Slide;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private ProfileFragment profileFragment;
     private PostsFragment postsFragment;
+    private boolean fromSignUpActivity = false;
+    private android.support.v4.app.FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +43,33 @@ public class HomeActivity extends AppCompatActivity {
 
         postsFragment = new PostsFragment();
         profileFragment = new ProfileFragment();
+        fm = getSupportFragmentManager();
 
-        final FragmentManager fm = getFragmentManager();
-        fm.beginTransaction()
-                .add(R.id.fragmentPart,postsFragment).commit();
+        if (getIntent().hasExtra("fromSignUpActivity")){
+            fromSignUpActivity = true;
+        }
 
+        Log.i(TAG,"fromSignUpActivity: "+fromSignUpActivity);
+
+        if (!fromSignUpActivity) {
+
+            fm.beginTransaction()
+                    .add(R.id.fragmentPart, postsFragment).commit();
+
+        }else {
+
+            fm.beginTransaction().add(R.id.fragmentPart,profileFragment).commit();
+            profile.setBackgroundColor(getColor(R.color.colorPrimary));
+            posts.setBackgroundColor(getColor(R.color.white));
+
+        }
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 profile.setBackgroundColor(getColor(R.color.colorPrimary));
                 posts.setBackgroundColor(getColor(R.color.white));
                 fm.beginTransaction()
-                        .replace(R.id.fragmentPart,profileFragment).commit();
+                        .replace(R.id.fragmentPart, profileFragment).commit();
             }
         });
 
@@ -60,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 profile.setBackgroundColor(getColor(R.color.white));
                 posts.setBackgroundColor(getColor(R.color.colorPrimary));
-                fm.beginTransaction().replace(R.id.fragmentPart,postsFragment).commit();
+                fm.beginTransaction().replace(R.id.fragmentPart, postsFragment).commit();
             }
         });
 
