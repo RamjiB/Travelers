@@ -1,18 +1,18 @@
-package ramji.travelers;
+package ramji.travelers.user_details;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ramji.travelers.R;
 
 public class UserImagesFragment extends android.support.v4.app.Fragment {
 
@@ -29,6 +29,7 @@ public class UserImagesFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_images,container,false);
         ButterKnife.bind(this,view);
+        Log.i(TAG,"UserImagesFragment");
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
         viewPager.setAdapter(adapter);

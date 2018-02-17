@@ -52,6 +52,10 @@ dependencies {
 
     //firebase storage
     compile 'com.google.firebase:firebase-storage:11.8.0'
+
+    //Google services
+    compile 'com.google.android.gms:play-services-location:11.8.0'
+    compile 'com.google.android.gms:play-services-places:11.8.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

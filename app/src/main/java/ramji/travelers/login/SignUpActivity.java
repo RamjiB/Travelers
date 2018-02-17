@@ -1,4 +1,4 @@
-package ramji.travelers;
+package ramji.travelers.login;
 
 
 import android.content.Context;
@@ -28,6 +28,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ramji.travelers.FirebaseMethods;
+import ramji.travelers.HomeActivity;
+import ramji.travelers.R;
 
 public class SignUpActivity extends AppCompatActivity{
 
@@ -87,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity{
                     firebaseMethods.registerNewEmail(username,email,password);
 
                     Intent intent = new Intent(getBaseContext(),HomeActivity.class);
-                    intent.putExtra("fromSignUpActivity","");
+                    intent.putExtra("fromSignUpActivity",true);
                     startActivity(intent);
                 }
             }

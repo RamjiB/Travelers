@@ -6,21 +6,12 @@
     android:layout_height="match_parent"
     tools:context="ramji.travelers.HomeActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBar"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:padding="@dimen/appbar_padding"
-        app:elevation="@dimen/appbar_elevation">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/app_name"
-            android:textSize="@dimen/title_text_size"
-            android:textColor="@android:color/black"
-            android:gravity="center_vertical" />
-    </android.support.design.widget.AppBarLayout>
+        app:elevation="@dimen/appbar_elevation"
+        android:background="@color/colorPrimary"/>
 
     <FrameLayout
         android:id="@+id/fragmentPart"

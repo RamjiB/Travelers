@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/EP_LL"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="10">
+
+    <RelativeLayout
+        android:id="@+id/nextBar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:padding="@dimen/add_post_text_padding">
+
+        <ImageView
+            android:id="@+id/EP_crossImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cross"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/EP_Done"
+            android:layout_width="wrap_content"
+            android:layout_height="?actionBarSize"
+            android:gravity="center_vertical"
+            android:layout_alignParentEnd="true"
+            android:padding="5dp"
+            android:text="@string/done"
+            android:textSize="@dimen/add_post_text"
+            android:textColor="@android:color/black" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/EP_profile_image"
+        android:layout_width="@dimen/EP_image_width"
+        android:layout_height="@dimen/EP_image_width"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="fitXY"/>
+
+    <EditText
+        android:id="@+id/EP_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="profile name"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/EP_text_size"
+        android:layout_marginStart="@dimen/EP_padding"
+        android:layout_marginEnd="@dimen/EP_padding"/>
+
+    <EditText
+        android:id="@+id/EP_aboutUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="About me"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/EP_text_size"
+        android:layout_marginStart="@dimen/EP_padding"
+        android:layout_marginEnd="@dimen/EP_padding"/>
+    <EditText
+        android:id="@+id/EP_userCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="City"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/EP_text_size"
+        android:layout_marginStart="@dimen/EP_padding"
+        android:layout_marginEnd="@dimen/EP_padding"/>
+
+</LinearLayout>

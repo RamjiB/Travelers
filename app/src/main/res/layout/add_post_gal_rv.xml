@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/nextBar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:padding="@dimen/add_post_text_padding">
+
+        <ImageView
+            android:id="@+id/crossImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cross"
+            android:layout_centerVertical="true"/>
+
+        <Spinner
+            android:id="@+id/spinnerDirectory"
+            android:layout_width="@dimen/spinner_width"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_toEndOf="@id/crossImage"/>
+
+        <TextView
+            android:id="@+id/add_post_next"
+            android:layout_width="wrap_content"
+            android:layout_height="?actionBarSize"
+            android:gravity="center_vertical"
+            android:layout_alignParentEnd="true"
+            android:text="@string/add_post_next"
+            android:textSize="@dimen/add_post_text"
+            android:textColor="@android:color/black"
+            android:drawablePadding="@dimen/add_post_text_padding"
+            android:drawableEnd="@drawable/ic_arrow_forward_black_24dp"/>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/user_images_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/nextBar"/>
+
+</RelativeLayout>

@@ -14,4 +14,20 @@
     <dimen name="profile_text_padding">2dp</dimen>
     <dimen name="profile_name_text_size">16sp</dimen>
     <dimen name="profile_text_size">14sp</dimen>
+    <dimen name="image_height">150dp</dimen>
+    <dimen name="location_padding">5dp</dimen>
+    <dimen name="image_description_padding">5dp</dimen>
+    <dimen name="line_height">1dp</dimen>
+    <dimen name="add_post_text">16sp</dimen>
+    <dimen name="add_post_text_padding">5dp</dimen>
+    <dimen name="spinner_width">150dp</dimen>
+    <dimen name="image_description_tv">16sp</dimen>
+    <dimen name="share_image">120dp</dimen>
+    <dimen name="place_adapter_text">16sp</dimen>
+    <dimen name="tickMark_size">40dp</dimen>
+    <dimen name="post_image_ht">200dp</dimen>
+    <dimen name="top_margin_UD">10dp</dimen>
+    <dimen name="EP_padding">10dp</dimen>
+    <dimen name="EP_text_size">14sp</dimen>
+    <dimen name="EP_image_width">150dp</dimen>
 </resources>
