@@ -22,7 +22,7 @@ import ramji.travelers.R;
 public class GalleryImagesGridAdapter extends RecyclerView.Adapter<GalleryImagesGridAdapter
         .ImagesViewHolder> {
 
-    private static final String TAG = "ImagesStaggeredAdapter";
+    private static final String TAG = "PostImagesAdapter";
 
     private Context mContext;
     private ImageClickListener imageClickListener;

@@ -5,6 +5,6 @@
     android:id="@+id/user_Image"
     android:layout_width="match_parent"
     android:layout_height="@dimen/image_height"
-    android:scaleType="centerCrop"
+    android:scaleType="fitXY"
     android:contentDescription="@string/userImage" />
 

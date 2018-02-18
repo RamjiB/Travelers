@@ -13,18 +13,9 @@ public class Photo implements Parcelable{
     private String user_id;
     private String location;
     private boolean favourite;
+    private String imageFile;
 
     public Photo() {
-    }
-
-    public Photo(String caption, String date_created, String image_path, String photo_id, String user_id, String location, boolean favourite) {
-        this.caption = caption;
-        this.date_created = date_created;
-        this.image_path = image_path;
-        this.photo_id = photo_id;
-        this.user_id = user_id;
-        this.location = location;
-        this.favourite = favourite;
     }
 
     protected Photo(Parcel in) {
@@ -35,6 +26,7 @@ public class Photo implements Parcelable{
         user_id = in.readString();
         location = in.readString();
         favourite = in.readByte() != 0;
+        imageFile = in.readString();
     }
 
     public static final Creator<Photo> CREATOR = new Creator<Photo>() {
@@ -59,6 +51,7 @@ public class Photo implements Parcelable{
                 ", user_id='" + user_id + '\'' +
                 ", location='" + location + '\'' +
                 ", favourite=" + favourite +
+                ", imageFile='" + imageFile + '\'' +
                 '}';
     }
 
@@ -118,6 +111,30 @@ public class Photo implements Parcelable{
         this.favourite = favourite;
     }
 
+    public String getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(String imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    public static Creator<Photo> getCREATOR() {
+        return CREATOR;
+    }
+
+    public Photo(String caption, String date_created, String image_path, String photo_id, String user_id, String location, boolean favourite, String imageFile) {
+
+        this.caption = caption;
+        this.date_created = date_created;
+        this.image_path = image_path;
+        this.photo_id = photo_id;
+        this.user_id = user_id;
+        this.location = location;
+        this.favourite = favourite;
+        this.imageFile = imageFile;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -132,5 +149,6 @@ public class Photo implements Parcelable{
         dest.writeString(user_id);
         dest.writeString(location);
         dest.writeByte((byte) (favourite ? 1 : 0));
+        dest.writeString(imageFile);
     }
 }

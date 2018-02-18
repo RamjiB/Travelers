@@ -10,7 +10,8 @@
         android:id="@+id/nextBar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:padding="@dimen/add_post_text_padding">
+        android:padding="@dimen/add_post_text_padding"
+        android:background="@drawable/bottom_border">
 
         <ImageView
             android:id="@+id/EP_crossImage"
@@ -67,5 +68,12 @@
         android:textSize="@dimen/EP_text_size"
         android:layout_marginStart="@dimen/EP_padding"
         android:layout_marginEnd="@dimen/EP_padding"/>
+
+    <ProgressBar
+        android:id="@+id/mProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible"/>
 
 </LinearLayout>

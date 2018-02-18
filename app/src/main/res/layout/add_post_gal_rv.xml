@@ -44,4 +44,26 @@
         android:layout_height="match_parent"
         android:layout_below="@id/nextBar"/>
 
+    <Button
+        android:id="@+id/openCameraBt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/open_camera"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/cameraImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nextBar"
+        android:visibility="invisible"/>
+
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nextBar"
+        android:visibility="invisible"/>
+
 </RelativeLayout>

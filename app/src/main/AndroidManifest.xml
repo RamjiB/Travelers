@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,18 +27,24 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDPrS0ahPSQhvBqjEPg2XzV_QSvTs3hUpI"/>
 
-        <activity android:name=".HomeActivity">
+        <activity android:name=".HomeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.SignUpActivity" />
-        <activity android:name=".image_details.ImageDetailsView" />
-        <activity android:name=".add_post.AddPost" />
-        <activity android:name=".add_post.NextActivity" />
-        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".login.SignUpActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".image_details.ImageDetailsView"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".add_post.AddPost"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".add_post.NextActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".EditProfileActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

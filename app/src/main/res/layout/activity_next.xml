@@ -82,4 +82,11 @@
         android:layout_below="@+id/currentLocation"
         android:padding="@dimen/add_post_text"/>
 
+    <ProgressBar
+        android:id="@+id/mProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+
 </RelativeLayout>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -26,18 +27,19 @@ import ramji.travelers.R;
 import ramji.travelers.image_details.ImageDetailsView;
 
 public class PostsFragment extends android.support.v4.app.Fragment implements
-        ImagesStaggeredAdapter.ImageClickListener{
+        PostImagesAdapter.ImageClickListener{
 
     private static final String TAG = "PostsFragment";
     private static final String IMAGE_URL = "imageUrl";
     private static final String POST_LOCATION = "postLocation";
     private static final String IMAGE_DESCRIPTION = "description";
     private static final String PHOTO_ID = "photo_id";
+    private static final String FILE_TYPE = "file_type";
 
     @BindView(R.id.rv_image_holder)
     RecyclerView imageHolder;
 
-    private ImagesStaggeredAdapter.ImageClickListener imageClickListener;
+    private PostImagesAdapter.ImageClickListener imageClickListener;
 
     @Nullable
     @Override
@@ -49,8 +51,7 @@ public class PostsFragment extends android.support.v4.app.Fragment implements
         imageClickListener = this;
         imageHolder.setHasFixedSize(true);
 
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
         imageHolder.setLayoutManager(layoutManager);
 
         getImageUrlsAndLocation();
@@ -58,10 +59,14 @@ public class PostsFragment extends android.support.v4.app.Fragment implements
     }
 
     private void getImageUrlsAndLocation() {
+
+        Log.i(TAG,"getImageUrlsAndLocation");
+
         final ArrayList<String> imageUrls = new ArrayList<>();
         final ArrayList<String> location = new ArrayList<>();
         final ArrayList<String> caption = new ArrayList<>();
         final ArrayList<String> photo_id = new ArrayList<>();
+        final ArrayList<String> fileType = new ArrayList<>();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         Query query = databaseReference.child(getString(R.string.dbname_photos));
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -77,14 +82,16 @@ public class PostsFragment extends android.support.v4.app.Fragment implements
                             .getValue().toString());
                    photo_id.add(singleSnapshot.child(getString(R.string.db_photo_id))
                             .getValue().toString());
+                   fileType.add(singleSnapshot.child(getString(R.string.db_fileType))
+                            .getValue().toString());
 
                 }
 
-                ImagesStaggeredAdapter adapter = new ImagesStaggeredAdapter(getContext(),
+                PostImagesAdapter adapter = new PostImagesAdapter(getContext(),
                         imageClickListener,
                         imageUrls,
                         location,
-                        caption,photo_id);
+                        caption,photo_id,fileType);
                 imageHolder.setAdapter(adapter);
 
             }
@@ -97,13 +104,15 @@ public class PostsFragment extends android.support.v4.app.Fragment implements
     }
 
     @Override
-    public void imageClick(String imageUrl, String postLocation, String description,String photo_id) {
+    public void imageClick(String imageUrl, String postLocation,
+                           String description,String photo_id,String fileType) {
 
         Intent intent = new Intent(getContext(), ImageDetailsView.class);
         intent.putExtra(IMAGE_URL,imageUrl);
         intent.putExtra(POST_LOCATION,postLocation);
         intent.putExtra(IMAGE_DESCRIPTION,description);
         intent.putExtra(PHOTO_ID,photo_id);
+        intent.putExtra(FILE_TYPE,fileType);
         startActivity(intent);
 
     }

@@ -188,29 +188,36 @@ public class ProfileLoginFragment extends android.support.v4.app.Fragment{
                     .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d(TAG,"signInwithEmailAndPassword: onComplete: "+task.isSuccessful());
+                            Log.d(TAG, "signInwithEmailAndPassword: onComplete: " + task.isSuccessful());
                             FirebaseUser user = mAuth.getCurrentUser();
-                            if (!task.isSuccessful()){
-                                Log.e(TAG,"signInEmail:failed ",task.getException());
-                        }else{
-                                try {
-                                    assert user != null;
-                                    if (user.isEmailVerified()) {
-                                        Log.d(TAG, "onComplete: success. email is verified");
-                                        mProgressBar.setVisibility(View.INVISIBLE);
-                                        moveIntoUserProfile();
 
-                                    }else{
-                                        Toast.makeText(getContext(),
-                                                "Email is not verified \n check your inbox",
-                                                Toast.LENGTH_SHORT).show();
-                                        mAuth.signOut();
+                            if (user == null) {
+                                Toast.makeText(getContext(), "user not registered", Toast.LENGTH_SHORT).show();
+                                mProgressBar.setVisibility(View.INVISIBLE);
+                            }else {
+                                if (!task.isSuccessful()) {
+                                    Log.e(TAG, "signInEmail:failed ", task.getException());
+                                } else {
+                                    try {
+                                        assert user != null;
+                                        if (user.isEmailVerified()) {
+                                            Log.d(TAG, "onComplete: success. email is verified");
+                                            mProgressBar.setVisibility(View.INVISIBLE);
+                                            moveIntoUserProfile();
+
+                                        } else {
+                                            Toast.makeText(getContext(),
+                                                    "Email is not verified \n check your inbox",
+                                                    Toast.LENGTH_SHORT).show();
+                                            mProgressBar.setVisibility(View.INVISIBLE);
+                                            mAuth.signOut();
+                                        }
+                                    } catch (Exception e) {
+                                        e.getMessage();
                                     }
-                                }catch(Exception e){
-                                    e.getMessage();
                                 }
-                            }
 
+                            }
                         }
                     });
         }

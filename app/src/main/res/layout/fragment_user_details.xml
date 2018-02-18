@@ -10,10 +10,10 @@
     <ImageView
         android:id="@+id/profile_image"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:padding="@dimen/profile_image_padding"
+        android:layout_height="@dimen/image_height"
         android:layout_weight="1"
         android:scaleType="fitXY"
+        android:layout_gravity="center_vertical"
         android:src="@mipmap/ic_launcher"/>
 
     <LinearLayout

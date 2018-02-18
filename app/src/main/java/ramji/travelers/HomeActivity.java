@@ -122,11 +122,12 @@ public class HomeActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.menu_add:
                 if (mAuth.getCurrentUser() != null){
-
                     Intent intent = new Intent(HomeActivity.this, AddPost.class);
                     startActivity(intent);
                 }else{
                     profileLoginFragment = new ProfileLoginFragment();
+                    profile.setBackgroundColor(getColor(R.color.colorPrimary));
+                    posts.setBackgroundColor(getColor(R.color.white));
                     fm.beginTransaction()
                             .replace(R.id.fragmentPart, profileLoginFragment).commit();
                 }

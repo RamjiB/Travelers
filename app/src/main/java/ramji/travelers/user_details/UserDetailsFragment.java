@@ -1,7 +1,6 @@
 package ramji.travelers.user_details;
 
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -30,11 +28,14 @@ import butterknife.ButterKnife;
 import ramji.travelers.EditProfileActivity;
 import ramji.travelers.GlideApp;
 import ramji.travelers.R;
-import ramji.travelers.posts.ImagesStaggeredAdapter;
 
 public class UserDetailsFragment extends android.support.v4.app.Fragment {
 
     private static final String TAG = "UserDetailsFragment";
+    private static final String IMAGE_URL = "image_url";
+    private static final String USERNAME = "profile_name";
+    private static final String USER_CITY = "city";
+    private static final String ABOUT_ME = "about_me";
 
     @BindView(R.id.profile_image)
     ImageView profile_image;
@@ -54,6 +55,7 @@ public class UserDetailsFragment extends android.support.v4.app.Fragment {
     private String username;
     private String userCity;
     private String aboutUser;
+    private String imageUrl = "";
 
     @Nullable
     @Override
@@ -68,6 +70,10 @@ public class UserDetailsFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                intent.putExtra(IMAGE_URL,imageUrl);
+                intent.putExtra(USERNAME,username);
+                intent.putExtra(USER_CITY,userCity);
+                intent.putExtra(ABOUT_ME,aboutUser);
                 startActivity(intent);
             }
         });
@@ -124,7 +130,7 @@ public class UserDetailsFragment extends android.support.v4.app.Fragment {
 
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     if (Objects.equals(userId, singleSnapshot.getKey())){
-                         String imageUrl = singleSnapshot
+                          imageUrl = singleSnapshot
                                 .child(getString(R.string.profile_image_path))
                                 .getValue().toString();
 

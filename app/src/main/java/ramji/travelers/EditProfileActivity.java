@@ -1,6 +1,7 @@
 package ramji.travelers;
 
 import android.*;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -16,9 +17,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +32,11 @@ public class EditProfileActivity extends AppCompatActivity{
     private static final String TAG = "EditProfileActivity";
 
     private static final int REQUEST_CODE = 100;
+
+    private static final String IMAGE_URL = "image_url";
+    private static final String USERNAME = "profile_name";
+    private static final String USER_CITY = "city";
+    private static final String ABOUT_ME = "about_me";
 
     private boolean storagePermission;
     private String filePath;
@@ -50,12 +59,26 @@ public class EditProfileActivity extends AppCompatActivity{
     @BindView(R.id.EP_profile_image)
     ImageView profileImage;
 
+    @BindView(R.id.mProgressBar)
+    ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         ButterKnife.bind(this);
+
+        final Context mContext = this;
+
+        final Intent intent = getIntent();
+        if (intent.hasExtra(IMAGE_URL) && intent.hasExtra(USERNAME) && intent.hasExtra(USER_CITY)
+                && intent.hasExtra(ABOUT_ME)){
+            filePath = intent.getStringExtra(IMAGE_URL);
+            userName.setText(intent.getStringExtra(USERNAME));
+            city.setText(intent.getStringExtra(USER_CITY));
+            aboutMe.setText(intent.getStringExtra(ABOUT_ME));
+        }
 
         GlideApp
                 .with(this)
@@ -94,8 +117,18 @@ public class EditProfileActivity extends AppCompatActivity{
 
                 Log.i(TAG,"name: "+ name);
 
-                FirebaseMethods firebaseMethods = new FirebaseMethods(getBaseContext());
-                firebaseMethods.uploadProfilePhoto(about,name,filePath,location,null);
+                progressBar.setVisibility(View.VISIBLE);
+                FirebaseMethods firebaseMethods = new FirebaseMethods(mContext);
+                if (!Objects.equals(filePath, intent.getStringExtra(IMAGE_URL))) {
+                    Log.i(TAG, "filePath: " + filePath);
+                    firebaseMethods.uploadProfilePhoto(about, name, filePath, location, progressBar);
+                }else{
+                    firebaseMethods.addProfilePhotoToDatabase(about,name,filePath,location);
+                    Intent intent = new Intent(mContext,HomeActivity.class);
+                    intent.putExtra("fromSignUpActivity",true);
+                    startActivity(intent);
+                }
+
 
             }
         });
@@ -103,6 +136,7 @@ public class EditProfileActivity extends AppCompatActivity{
     }
 
     private void pickImage() {
+
         Intent i = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         final int ACTIVITY_SELECT_IMAGE = 1234;

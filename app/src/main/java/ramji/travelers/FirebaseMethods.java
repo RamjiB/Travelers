@@ -10,6 +10,8 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,8 +29,10 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import ramji.travelers.Utils.FilePaths;
@@ -129,7 +133,7 @@ public class FirebaseMethods {
     }
 
     public void uploadNewPhoto(String photoType, final String caption, int count,
-                               final String imgUrl, final String location, Bitmap bm){
+                               final String imgUrl, final String location, final ProgressBar progressBar){
 
         Log.d(TAG,"uploadNewPhoto: attempting to upload a new photo");
 
@@ -144,30 +148,27 @@ public class FirebaseMethods {
             StorageReference storageReference = mStorageRefernece
                     .child(filePaths.FIREBASE_IMAGE_STORAGE +"/"+ user_id + "/photo" + (count +1));
 
-            //convert image uri to bitmap
-            if (bm == null){
-                bm = ImageManager.getBitmap(imgUrl);
-            }
-
-            byte[] bytes= ImageManager.getBytesFromBitmap(bm,100);
+            Uri file = Uri.fromFile(new File(imgUrl));
 
             UploadTask uploadTask = null;
-            uploadTask =storageReference.putBytes(bytes);
+            uploadTask =storageReference.putFile(file);
 
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
+                    String fileType = taskSnapshot.getMetadata().getContentType();
                     Uri firebaseUrl = taskSnapshot.getDownloadUrl();
 
                     Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
 
                     // add the new photo to 'photos' node and 'users_photo' node
 
-                    addPhotoToDatabase(caption,location, firebaseUrl.toString());
+                    addPhotoToDatabase(caption,location, firebaseUrl.toString(),fileType);
 
                     //navigate to the main feed so the user cans ee their photo
+                    progressBar.setVisibility(View.INVISIBLE);
 
                     Intent intent = new Intent(mContext, HomeActivity.class);
                     mContext.startActivity(intent);
@@ -198,8 +199,8 @@ public class FirebaseMethods {
         }
     }
 
-    public void uploadProfilePhoto(final String aboutMe,final String profileName,
-                                    final String imgUrl, final String location, Bitmap bm){
+    public void uploadProfilePhoto(final String aboutMe, final String profileName,
+                                   final String imgUrl, final String location, final ProgressBar progressBar){
 
         //case 2: new profile photo
 
@@ -211,14 +212,10 @@ public class FirebaseMethods {
         StorageReference storageReference = mStorageRefernece
                 .child(filePaths.FIREBASE_IMAGE_STORAGE +"/"+ user_id + "/profile_photo" );
 
-        //convert image uri to bitmap
-        if (bm == null){
-            bm = ImageManager.getBitmap(imgUrl);
-        }
-        byte[] bytes= ImageManager.getBytesFromBitmap(bm,100);
+        Uri file = Uri.fromFile(new File(imgUrl));
 
         UploadTask uploadTask = null;
-        uploadTask =storageReference.putBytes(bytes);
+        uploadTask =storageReference.putFile(file);
 
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -230,6 +227,11 @@ public class FirebaseMethods {
                 Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
                 addProfilePhotoToDatabase(aboutMe,profileName,firebaseUrl.toString(),location);
 
+                progressBar.setVisibility(View.INVISIBLE);
+
+                Intent intent = new Intent(mContext,HomeActivity.class);
+                intent.putExtra("fromSignUpActivity",true);
+                mContext.startActivity(intent);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -261,7 +263,7 @@ public class FirebaseMethods {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void addSavedPhotos(String caption, String location, String url,boolean favourite,
-                               String photoKey){
+                               String photoKey,String fileType){
         Log.d(TAG,"addPhotoToDatabase: adding photo to database");
 
         Photo photo = new Photo();
@@ -272,6 +274,7 @@ public class FirebaseMethods {
         photo.setUser_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
         photo.setPhoto_id(photoKey);
         photo.setFavourite(favourite);
+        photo.setImageFile(fileType);
 
         //insert into database
         myRef.child(mContext.getString(R.string.dbname_saved_photos))
@@ -281,7 +284,7 @@ public class FirebaseMethods {
 
 
 
-    private void addProfilePhotoToDatabase(String aboutMe, String profileName,
+    public void addProfilePhotoToDatabase(String aboutMe, String profileName,
                                            String imgUrl, String location) {
 
         Log.d(TAG,"addProfilePhotoToDatabase: adding photo to database");
@@ -300,8 +303,8 @@ public class FirebaseMethods {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void addPhotoToDatabase(String caption,String location, String url){
-        Log.d(TAG,"addPhotoToDatabase: adding photo to database");
+    private void addPhotoToDatabase(String caption,String location, String url,String fileType){
+
 
         String newPhotoKey = myRef.child(mContext.getString(R.string.dbname_photos)).push().getKey();
         Photo photo = new Photo();
@@ -311,6 +314,7 @@ public class FirebaseMethods {
         photo.setLocation(location);
         photo.setUser_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
         photo.setPhoto_id(newPhotoKey);
+        photo.setImageFile(fileType);
 
         //insert into database
         myRef.child(mContext.getString(R.string.dbname_user_photos))

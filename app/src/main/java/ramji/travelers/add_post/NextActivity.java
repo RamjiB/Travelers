@@ -22,6 +22,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -94,6 +95,9 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
     @BindView(R.id.layoutView)
     RelativeLayout layout;
 
+    @BindView(R.id.mProgressBar)
+    ProgressBar progressBar;
+
     //Firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -119,6 +123,7 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
     private ArrayList<String> placesPrimary;
     private ArrayList<String> placesSecondary;
     private PlaceAdapter.onItemClickListener onItemClickListener;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -159,6 +164,8 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
 
             imageUrl = getIntent().getStringExtra(IMAGE_URL);
 
+            Log.i(TAG,"imageUrl: "+ imageUrl);
+
             GlideApp
                     .with(this)
                     .load(imageUrl)
@@ -174,8 +181,9 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
                     String caption = mCaption.getText().toString();
                     String location = mLocation.getText().toString();
 
+                    progressBar.setVisibility(View.VISIBLE);
                     mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo),caption,
-                            imageCount,imageUrl,location,null);
+                            imageCount,imageUrl,location,progressBar);
                 }
             });
 

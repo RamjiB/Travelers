@@ -8,14 +8,43 @@
     android:orientation="vertical"
     android:weightSum="3">
 
-    <ImageView
-        android:id="@+id/image"
+    <RelativeLayout
+        android:id="@+id/nextBar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:padding="@dimen/add_post_text_padding"
+        android:background="@drawable/bottom_border">
+
+        <ImageView
+            android:id="@+id/crossImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cross"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
-        android:scaleType="fitXY"
-        android:src="@android:color/darker_gray"
-        android:contentDescription="@string/postImage" />
+        android:layout_weight="2">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@android:color/darker_gray"
+            android:contentDescription="@string/postImage" />
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@android:color/darker_gray"
+            android:contentDescription="@string/postImage"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

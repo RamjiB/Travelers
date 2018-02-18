@@ -21,6 +21,7 @@ public class AddPostViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        Log.i(TAG,"position: "+ position);
         Log.i(TAG,"AddPostViewPagerAdapter: getItem");
         return AddPostTabFragment.getInstance(position);
     }

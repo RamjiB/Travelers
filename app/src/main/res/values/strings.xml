@@ -47,5 +47,8 @@
     <string name="dbname_saved_photos">saved_photos</string>
     <string name="favourite">favourite</string>
     <string name="db_photo_id">photo_id</string>
+    <string name="open_camera">Open Camera</string>
+    <string name="open_video">OPEN VIDEO</string>
+    <string name="db_fileType">imageFile</string>
 
 </resources>

@@ -2,7 +2,6 @@ package ramji.travelers.user_details;
 
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +27,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ramji.travelers.R;
 import ramji.travelers.image_details.ImageDetailsView;
-import ramji.travelers.posts.ImagesStaggeredAdapter;
 
 public class TabFragment extends android.support.v4.app.Fragment implements
         ImagesGridAdapter.ImageClickListener{
@@ -40,6 +37,7 @@ public class TabFragment extends android.support.v4.app.Fragment implements
     private static final String POST_LOCATION = "postLocation";
     private static final String IMAGE_DESCRIPTION = "description";
     private static final String PHOTO_ID = "photo_id";
+    private static final String FILE_TYPE = "file_type";
 
     private int position;
     private ImagesGridAdapter.ImageClickListener imageClickListener;
@@ -102,6 +100,7 @@ public class TabFragment extends android.support.v4.app.Fragment implements
         final ArrayList<String> location = new ArrayList<>();
         final ArrayList<String> caption = new ArrayList<>();
         final ArrayList<String> photo_id = new ArrayList<>();
+        final ArrayList<String> fileType = new ArrayList<>();
         Query query = null;
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         if (Objects.equals(photoType, getString(R.string.dbname_saved_photos))) {
@@ -125,6 +124,8 @@ public class TabFragment extends android.support.v4.app.Fragment implements
                                 .getValue().toString());
                         photo_id.add(singleSnapshot.child(getString(R.string.db_photo_id))
                                 .getValue().toString());
+                        fileType.add(singleSnapshot.child(getString(R.string.db_fileType))
+                                .getValue().toString());
 
                     }
 
@@ -132,7 +133,7 @@ public class TabFragment extends android.support.v4.app.Fragment implements
                             imageClickListener,
                             imageUrls,
                             location,
-                            caption,photo_id);
+                            caption,photo_id,fileType);
                     imagesRecyclerView.setAdapter(adapter);
 
                 }
@@ -186,13 +187,15 @@ public class TabFragment extends android.support.v4.app.Fragment implements
 //    }
 
     @Override
-    public void imageClick(String imageUrl, String postLocation, String description,String photo_id) {
+    public void imageClick(String imageUrl, String postLocation, String description,
+                           String photo_id,String fileType) {
 
         Intent intent = new Intent(getContext(), ImageDetailsView.class);
         intent.putExtra(IMAGE_URL,imageUrl);
         intent.putExtra(POST_LOCATION,postLocation);
         intent.putExtra(IMAGE_DESCRIPTION,description);
         intent.putExtra(PHOTO_ID,photo_id);
+        intent.putExtra(FILE_TYPE,fileType);
         startActivity(intent);
 
     }
