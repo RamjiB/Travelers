@@ -50,5 +50,6 @@
     <string name="open_camera">Open Camera</string>
     <string name="open_video">OPEN VIDEO</string>
     <string name="db_fileType">imageFile</string>
+    <string name="capturing_video">capturing video</string>
 
 </resources>

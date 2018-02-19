@@ -31,4 +31,6 @@
     <dimen name="EP_text_size">16sp</dimen>
     <dimen name="EP_image_width">150dp</dimen>
     <dimen name="app_bar_elevation">4dp</dimen>
+    <dimen name="image_post_ht">300dp</dimen>
+    <dimen name="capture_icon_top_margin">30dp</dimen>
 </resources>

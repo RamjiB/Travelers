@@ -52,18 +52,24 @@
         android:layout_centerInParent="true"
         android:visibility="invisible"/>
 
-    <ImageView
-        android:id="@+id/cameraImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/nextBar"
-        android:visibility="invisible"/>
-
-    <VideoView
+    <SurfaceView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/image_post_ht"
         android:layout_below="@id/nextBar"
+        android:src="@drawable/ic_camera_capture"
         android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/capture_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_camera_capture"
+        android:layout_below="@id/videoView"
+        android:layout_marginTop="@dimen/capture_icon_top_margin"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/capturing_video"
+        android:visibility="invisible"/>
+
 
 </RelativeLayout>

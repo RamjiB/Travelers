@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,6 +69,9 @@ public class PostImagesAdapter extends RecyclerView.Adapter<PostImagesAdapter
                 .into(holder.postedImage);
 
         holder.postLocation.setText(location.get(position));
+        if (!Objects.equals(fileType.get(position), "image/jpeg")){
+            holder.video_icon.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -80,6 +84,9 @@ public class PostImagesAdapter extends RecyclerView.Adapter<PostImagesAdapter
 
         @BindView(R.id.postedImage)
         ImageView postedImage;
+
+        @BindView(R.id.video_icon)
+        ImageView video_icon;
 
         @BindView(R.id.postLocation)
         TextView postLocation;

@@ -16,6 +16,31 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.LoadControl;
+import com.google.android.exoplayer2.PlaybackParameters;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.extractor.ExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.LoopingMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.TrackGroupArray;
+import com.google.android.exoplayer2.source.hls.HlsMediaSource;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,7 +88,9 @@ public class ImageDetailsView extends AppCompatActivity {
     ImageView crossImage;
 
     @BindView(R.id.videoView)
-    VideoView videoView;
+    SimpleExoPlayerView videoView;
+
+    private SimpleExoPlayer player;
 
     private String getImageUrl;
     private String getPostLocation;
@@ -105,11 +132,7 @@ public class ImageDetailsView extends AppCompatActivity {
         if (!Objects.equals(getFileType, "image/jpeg")){
             image.setVisibility(View.INVISIBLE);
             videoView.setVisibility(View.VISIBLE);
-            videoView.setVideoURI(Uri.parse(getImageUrl));
-
-            MediaController mc = new MediaController(this);
-            videoView.setMediaController(mc);
-            videoView.start();
+            setVideoPlayer();
 
         }else{
 
@@ -225,5 +248,99 @@ public class ImageDetailsView extends AppCompatActivity {
                 }
             });
 
+    }
+
+    private void setVideoPlayer() {
+
+        //Create a default TrackSelector
+        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
+        TrackSelector trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
+
+        //Create a default LoadControl
+        LoadControl loadControl = new DefaultLoadControl();
+
+        //Create player
+        player = ExoPlayerFactory.newSimpleInstance(this,trackSelector,loadControl);
+
+        //Set media controller
+        videoView.setUseController(true);
+        videoView.requestFocus();
+
+        // Bind the player to the view.
+        videoView.setResizeMode(3);
+        videoView.setPlayer(player);
+
+        //Video Source
+        Uri videoUri = Uri.parse(getImageUrl);
+
+        //Measures bandwidth uring playback. Can be null if not required.
+        DefaultBandwidthMeter bandwidthMeterA = new DefaultBandwidthMeter();
+
+        //Produces DataSource instances through which media data is loaded.
+        DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(this,
+                Util.getUserAgent(this, "ramji.travelers"), bandwidthMeterA);
+
+        //Produces Extractor instances for parsing the media data.
+        ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+
+        //This is the MediaSource representing the media to be played:
+        MediaSource videoSource = new ExtractorMediaSource(videoUri,
+                dataSourceFactory, extractorsFactory, null, null);
+        final LoopingMediaSource loopingSource = new LoopingMediaSource(videoSource);
+
+        // Prepare the player with the source.
+        player.prepare(loopingSource);
+        player.addListener(new Player.EventListener() {
+            @Override
+            public void onTimelineChanged(Timeline timeline, Object manifest) {
+
+            }
+
+            @Override
+            public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+
+            }
+
+            @Override
+            public void onLoadingChanged(boolean isLoading) {
+
+            }
+
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+
+            }
+
+            @Override
+            public void onRepeatModeChanged(int repeatMode) {
+
+            }
+
+            @Override
+            public void onPlayerError(ExoPlaybackException error) {
+                player.stop();
+                player.prepare(loopingSource);
+                player.setPlayWhenReady(true);
+            }
+
+            @Override
+            public void onPositionDiscontinuity() {
+
+            }
+
+            @Override
+            public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+            }
+        });
+        player.setPlayWhenReady(true); //run file/link when ready to play.
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        player.release();
     }
 }

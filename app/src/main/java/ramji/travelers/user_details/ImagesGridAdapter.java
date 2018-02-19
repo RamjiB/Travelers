@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,6 +71,10 @@ public class ImagesGridAdapter extends RecyclerView.Adapter<ImagesGridAdapter
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.userImage);
 
+        if (!Objects.equals(fileType.get(position), "image/jpeg")){
+            holder.video_icon.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
@@ -83,6 +88,9 @@ public class ImagesGridAdapter extends RecyclerView.Adapter<ImagesGridAdapter
 
         @BindView(R.id.user_Image)
         ImageView userImage;
+
+        @BindView(R.id.video_icon)
+        ImageView video_icon;
 
 
         public ImagesViewHolder(View itemView) {
@@ -99,7 +107,6 @@ public class ImagesGridAdapter extends RecyclerView.Adapter<ImagesGridAdapter
                     caption.get(getAdapterPosition()),
                     photo_id.get(getAdapterPosition()),
                     fileType.get(getAdapterPosition()));
-
         }
     }
 }

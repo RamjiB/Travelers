@@ -56,6 +56,9 @@ dependencies {
     //Google services
     compile 'com.google.android.gms:play-services-location:11.8.0'
     compile 'com.google.android.gms:play-services-places:11.8.0'
+
+    //Exoplayer
+    compile 'com.google.android.exoplayer:exoplayer:r2.5.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
