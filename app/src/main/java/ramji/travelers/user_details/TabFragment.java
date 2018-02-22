@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +26,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ramji.travelers.HomeActivity;
 import ramji.travelers.R;
 import ramji.travelers.image_details.ImageDetailsView;
 
@@ -41,9 +43,13 @@ public class TabFragment extends android.support.v4.app.Fragment implements
 
     private int position;
     private ImagesGridAdapter.ImageClickListener imageClickListener;
+    private GridLayoutManager gridLayoutManager;
 
     @BindView(R.id.user_images_rv)
     RecyclerView imagesRecyclerView;
+
+    @BindView(R.id.mProgressBar)
+    ProgressBar mProgressBar;
 
     public static TabFragment getInstance(int position){
 
@@ -77,7 +83,12 @@ public class TabFragment extends android.support.v4.app.Fragment implements
 
         Log.i(TAG,"Tab Fragment: onCreateView");
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
+        mProgressBar.setVisibility(View.VISIBLE);
+        if (getResources().getBoolean(R.bool.is_phone))
+            gridLayoutManager = new GridLayoutManager(getContext(),3);
+        else
+            gridLayoutManager = new GridLayoutManager(getContext(),5);
+
         imagesRecyclerView.setLayoutManager(gridLayoutManager);
 
         switch(position){
@@ -89,8 +100,6 @@ public class TabFragment extends android.support.v4.app.Fragment implements
                 break;
         }
 
-//        getImageUrlsAndLocation(getString(R.string.dbname_user_photos));
-        
         return view;
     }
 
@@ -135,6 +144,7 @@ public class TabFragment extends android.support.v4.app.Fragment implements
                             location,
                             caption,photo_id,fileType);
                     imagesRecyclerView.setAdapter(adapter);
+                    mProgressBar.setVisibility(View.INVISIBLE);
 
                 }
 
@@ -146,57 +156,29 @@ public class TabFragment extends android.support.v4.app.Fragment implements
         }
     }
 
-//    private void getUsersImageUrlsAndLocation() {
-//        final ArrayList<String> imageUrls = new ArrayList<>();
-//        final ArrayList<String> location = new ArrayList<>();
-//        final ArrayList<String> caption = new ArrayList<>();
-//        final ArrayList<String> photo_id = new ArrayList<>();
-//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-//        Query query = databaseReference.child(getString(R.string.dbname_user_photos))
-//                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-//        query.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
-//                    imageUrls.add(singleSnapshot.child(getString(R.string.db_image_path))
-//                            .getValue().toString());
-//                    Log.i(TAG,"imageUrls: "+ imageUrls);
-//                    location.add(singleSnapshot.child(getString(R.string.db_location))
-//                            .getValue().toString());
-//                    caption.add(singleSnapshot.child(getString(R.string.db_caption))
-//                            .getValue().toString());
-//                    photo_id.add(singleSnapshot.child(getString(R.string.db_photo_id))
-//                            .getValue().toString());
-//
-//                }
-//
-//                ImagesGridAdapter adapter = new ImagesGridAdapter(getContext(),
-//                        imageClickListener,
-//                        imageUrls,
-//                        location,
-//                        caption,photo_id);
-//                imagesRecyclerView.setAdapter(adapter);
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
-
     @Override
     public void imageClick(String imageUrl, String postLocation, String description,
                            String photo_id,String fileType) {
 
-        Intent intent = new Intent(getContext(), ImageDetailsView.class);
-        intent.putExtra(IMAGE_URL,imageUrl);
-        intent.putExtra(POST_LOCATION,postLocation);
-        intent.putExtra(IMAGE_DESCRIPTION,description);
-        intent.putExtra(PHOTO_ID,photo_id);
-        intent.putExtra(FILE_TYPE,fileType);
-        startActivity(intent);
+        if (getResources().getBoolean(R.bool.is_phone)) {
+
+            Intent intent = new Intent(getContext(), ImageDetailsView.class);
+            intent.putExtra(IMAGE_URL, imageUrl);
+            intent.putExtra(POST_LOCATION, postLocation);
+            intent.putExtra(IMAGE_DESCRIPTION, description);
+            intent.putExtra(PHOTO_ID, photo_id);
+            intent.putExtra(FILE_TYPE, fileType);
+            startActivity(intent);
+        }else{
+
+            Intent intent = new Intent(getContext(), HomeActivity.class);
+            intent.putExtra(IMAGE_URL, imageUrl);
+            intent.putExtra(POST_LOCATION, postLocation);
+            intent.putExtra(IMAGE_DESCRIPTION, description);
+            intent.putExtra(PHOTO_ID, photo_id);
+            intent.putExtra(FILE_TYPE, fileType);
+            startActivity(intent);
+        }
 
     }
 }

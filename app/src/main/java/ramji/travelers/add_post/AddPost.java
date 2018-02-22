@@ -1,6 +1,7 @@
 package ramji.travelers.add_post;
 
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -28,6 +29,10 @@ public class AddPost extends AppCompatActivity {
         setContentView(R.layout.activity_add_post);
         ButterKnife.bind(this);
 
+        if (getResources().getBoolean(R.bool.is_phone))
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        else
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         FragmentManager fm = getSupportFragmentManager();
         AddPostFragment addPostFragment = new AddPostFragment();
         fm.beginTransaction().add(R.id.add_post_fragment,addPostFragment).commit();

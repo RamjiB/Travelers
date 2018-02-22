@@ -3,6 +3,7 @@ package ramji.travelers;
 import android.*;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.Image;
@@ -15,8 +16,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -62,6 +65,9 @@ public class EditProfileActivity extends AppCompatActivity{
     @BindView(R.id.mProgressBar)
     ProgressBar progressBar;
 
+    @BindView(R.id.EP_LL)
+    LinearLayout layout;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +76,19 @@ public class EditProfileActivity extends AppCompatActivity{
         ButterKnife.bind(this);
 
         final Context mContext = this;
+
+        hideSoftKeyboards();
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideSoftKeyboards();
+            }
+        });
+        if (getResources().getBoolean(R.bool.is_phone))
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        else
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         final Intent intent = getIntent();
         if (intent.hasExtra(IMAGE_URL) && intent.hasExtra(USERNAME) && intent.hasExtra(USER_CITY)
@@ -111,6 +130,7 @@ public class EditProfileActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
+                hideSoftKeyboards();
                 String name = userName.getText().toString();
                 String location = city.getText().toString();
                 String about = aboutMe.getText().toString();
@@ -118,6 +138,7 @@ public class EditProfileActivity extends AppCompatActivity{
                 Log.i(TAG,"name: "+ name);
 
                 progressBar.setVisibility(View.VISIBLE);
+
                 FirebaseMethods firebaseMethods = new FirebaseMethods(mContext);
                 if (!Objects.equals(filePath, intent.getStringExtra(IMAGE_URL))) {
                     Log.i(TAG, "filePath: " + filePath);
@@ -141,6 +162,13 @@ public class EditProfileActivity extends AppCompatActivity{
                 android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         final int ACTIVITY_SELECT_IMAGE = 1234;
         startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
+    }
+
+    private void hideSoftKeyboards(){
+        if (getCurrentFocus() != null){
+            InputMethodManager imm =(InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+        }
     }
 
     @Override

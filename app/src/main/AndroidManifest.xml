@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ramji.travelers">
 
+    <!-- permission list -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -20,6 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!-- meta data for google services -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -29,24 +31,19 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDPrS0ahPSQhvBqjEPg2XzV_QSvTs3hUpI"/>
 
-        <activity android:name=".HomeActivity"
-            android:screenOrientation="portrait">
+        <!-- list of activities -->
+        <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.SignUpActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".image_details.ImageDetailsView"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".add_post.AddPost"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".add_post.NextActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".EditProfileActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".login.SignUpActivity" />
+        <activity android:name=".image_details.ImageDetailsView" />
+        <activity android:name=".add_post.AddPost" />
+        <activity android:name=".add_post.NextActivity" />
+        <activity android:name=".EditProfileActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -59,6 +56,15 @@
 
             </meta-data>
         </provider>
+
+        <!-- Widget service -->
+        <receiver android:name="AppWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_info" />
+        </receiver>
     </application>
 
 </manifest>

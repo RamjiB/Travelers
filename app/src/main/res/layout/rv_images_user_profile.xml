@@ -19,7 +19,7 @@
         android:src="@drawable/ic_play_arrow_black_24dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:visibility="visible"/>
+        android:visibility="invisible"/>
 
 </RelativeLayout>
 

@@ -1,7 +1,9 @@
 package ramji.travelers.image_details;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -106,6 +108,7 @@ public class ImageDetailsView extends AppCompatActivity {
         setContentView(R.layout.activity_image_detail_view);
         ButterKnife.bind(this);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Intent intent = getIntent();
         if (intent.hasExtra(IMAGE_URL) && intent.hasExtra(POST_LOCATION) &&
                 intent.hasExtra(IMAGE_DESCRIPTION) && intent.hasExtra(PHOTO_ID)
@@ -250,7 +253,7 @@ public class ImageDetailsView extends AppCompatActivity {
 
     }
 
-    private void setVideoPlayer() {
+    public void setVideoPlayer() {
 
         //Create a default TrackSelector
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
@@ -341,6 +344,7 @@ public class ImageDetailsView extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        player.release();
+        if (player != null)
+            player.release();
     }
 }

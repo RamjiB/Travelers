@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -52,6 +53,9 @@ public class UserDetailsFragment extends android.support.v4.app.Fragment {
     @BindView(R.id.edit_profile)
     TextView editProfile;
 
+    @BindView(R.id.mProgressBar)
+    ProgressBar mProgressBar;
+
     private String username;
     private String userCity;
     private String aboutUser;
@@ -63,6 +67,7 @@ public class UserDetailsFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_user_details,container,false);
         ButterKnife.bind(this,view);
 
+        mProgressBar.setVisibility(View.VISIBLE);
         Log.i(TAG,"UserDetailsFragment");
         setProfileImage();
         setOtherDetails();
@@ -141,6 +146,7 @@ public class UserDetailsFragment extends android.support.v4.app.Fragment {
                                 .error(R.drawable.ic_default_profile_image)
                                 .transition(DrawableTransitionOptions.withCrossFade())
                                 .into(profile_image);
+                        mProgressBar.setVisibility(View.INVISIBLE);
                     }
                 }
             }

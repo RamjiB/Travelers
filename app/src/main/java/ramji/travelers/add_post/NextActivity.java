@@ -4,6 +4,7 @@ package ramji.travelers.add_post;
 import android.Manifest;
 import android.content.Context;
 import android.content.IntentSender;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -130,6 +131,12 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next);
         ButterKnife.bind(this);
+
+        hideSoftKeyboard();
+        if (getResources().getBoolean(R.bool.is_phone))
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        else
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         mFirebaseMethods = new FirebaseMethods(this);
         setupFirebaseAuth();

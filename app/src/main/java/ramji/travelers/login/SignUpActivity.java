@@ -3,6 +3,7 @@ package ramji.travelers.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
@@ -62,6 +63,11 @@ public class SignUpActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_new_account);
         ButterKnife.bind(this);
+
+        if (getResources().getBoolean(R.bool.is_phone))
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        else
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         layoutView.setOnClickListener(new View.OnClickListener() {
             @Override

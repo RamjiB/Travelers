@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ramji.travelers.HomeActivity;
 import ramji.travelers.R;
 import ramji.travelers.image_details.ImageDetailsView;
 
@@ -39,19 +41,28 @@ public class PostsFragment extends android.support.v4.app.Fragment implements
     @BindView(R.id.rv_image_holder)
     RecyclerView imageHolder;
 
+    @BindView(R.id.mProgressBar)
+    ProgressBar mProgressBar;
+
     private PostImagesAdapter.ImageClickListener imageClickListener;
+    private GridLayoutManager layoutManager;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
-       View view = inflater.inflate(R.layout.fragment_post,container,false);
+        View view = inflater.inflate(R.layout.fragment_post,container,false);
         ButterKnife.bind(this,view);
 
         imageClickListener = this;
         imageHolder.setHasFixedSize(true);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
+        mProgressBar.setVisibility(View.VISIBLE);
+        if (getResources().getBoolean(R.bool.is_phone)) {
+             layoutManager = new GridLayoutManager(getContext(), 2);
+        }else{
+            layoutManager = new GridLayoutManager(getContext(),4);
+        }
         imageHolder.setLayoutManager(layoutManager);
 
         getImageUrlsAndLocation();
@@ -93,6 +104,7 @@ public class PostsFragment extends android.support.v4.app.Fragment implements
                         location,
                         caption,photo_id,fileType);
                 imageHolder.setAdapter(adapter);
+                mProgressBar.setVisibility(View.INVISIBLE);
 
             }
 
@@ -107,13 +119,25 @@ public class PostsFragment extends android.support.v4.app.Fragment implements
     public void imageClick(String imageUrl, String postLocation,
                            String description,String photo_id,String fileType) {
 
-        Intent intent = new Intent(getContext(), ImageDetailsView.class);
-        intent.putExtra(IMAGE_URL,imageUrl);
-        intent.putExtra(POST_LOCATION,postLocation);
-        intent.putExtra(IMAGE_DESCRIPTION,description);
-        intent.putExtra(PHOTO_ID,photo_id);
-        intent.putExtra(FILE_TYPE,fileType);
-        startActivity(intent);
+        if (getResources().getBoolean(R.bool.is_phone)) {
+
+            Intent intent = new Intent(getContext(), ImageDetailsView.class);
+            intent.putExtra(IMAGE_URL, imageUrl);
+            intent.putExtra(POST_LOCATION, postLocation);
+            intent.putExtra(IMAGE_DESCRIPTION, description);
+            intent.putExtra(PHOTO_ID, photo_id);
+            intent.putExtra(FILE_TYPE, fileType);
+            startActivity(intent);
+        }else{
+
+            Intent intent = new Intent(getContext(), HomeActivity.class);
+            intent.putExtra(IMAGE_URL, imageUrl);
+            intent.putExtra(POST_LOCATION, postLocation);
+            intent.putExtra(IMAGE_DESCRIPTION, description);
+            intent.putExtra(PHOTO_ID, photo_id);
+            intent.putExtra(FILE_TYPE, fileType);
+            startActivity(intent);
+        }
 
     }
 }
