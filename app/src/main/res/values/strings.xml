@@ -51,5 +51,6 @@
     <string name="open_video">OPEN VIDEO</string>
     <string name="db_fileType">imageFile</string>
     <string name="capturing_video">capturing video</string>
+    <string name="widget_empty_string">No saved locations</string>
 
 </resources>

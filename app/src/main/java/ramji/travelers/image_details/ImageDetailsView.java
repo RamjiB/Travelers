@@ -55,6 +55,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ramji.travelers.FavouritePlaceUpdatedWidget;
 import ramji.travelers.FirebaseMethods;
 import ramji.travelers.GlideApp;
 import ramji.travelers.HomeActivity;
@@ -208,6 +209,7 @@ public class ImageDetailsView extends AppCompatActivity {
                         FirebaseMethods firebaseMethods = new FirebaseMethods(getBaseContext());
                         firebaseMethods.addSavedPhotos(getImageDescription, getPostLocation
                                 , getImageUrl, favourite, getPhotoId, getFileType);
+                        FavouritePlaceUpdatedWidget.startActionUpdateFavWidgets(getBaseContext());
                     }
                 }
             });
@@ -237,6 +239,8 @@ public class ImageDetailsView extends AppCompatActivity {
 
                                     if (favourite) {
                                         singleSnapshot.getRef().removeValue();
+                                        FavouritePlaceUpdatedWidget
+                                                .startActionUpdateFavWidgets(getBaseContext());
                                     }
                                 }
                             }

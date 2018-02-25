@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -92,33 +93,43 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.toolBar)
     Toolbar toolbar;
 
+    @Nullable
     @BindView(R.id.add_new_FAB)
     FloatingActionButton addPostFAB;
 
+    @Nullable
     @BindView(R.id.image)
     ImageView image;
 
+    @Nullable
     @BindView(R.id.postLocation)
     TextView postLocation;
 
+    @Nullable
     @BindView(R.id.imageDescriptionTV)
     TextView imageDescription;
 
+    @Nullable
     @BindView(R.id.notFav)
     ImageView notFav;
 
+    @Nullable
     @BindView(R.id.fav)
     ImageView fav;
 
+    @Nullable
     @BindView(R.id.crossImage)
     ImageView crossImage;
 
+    @Nullable
     @BindView(R.id.videoView)
     SimpleExoPlayerView videoView;
 
+    @Nullable
     @BindView(R.id.bts_layout)
     LinearLayout bt_layout;
 
+    @Nullable
     @BindView(R.id.user_details_layout)
     CardView userDetailsLayout;
 
@@ -328,6 +339,8 @@ public class HomeActivity extends AppCompatActivity {
                     FirebaseMethods firebaseMethods = new FirebaseMethods(getBaseContext());
                     firebaseMethods.addSavedPhotos(getImageDescription, getPostLocation
                             , getImageUrl, favourite, getPhotoId, getFileType);
+
+                    FavouritePlaceUpdatedWidget.startActionUpdateFavWidgets(getBaseContext());
                 }
             }
         });
@@ -357,6 +370,8 @@ public class HomeActivity extends AppCompatActivity {
 
                                 if (favourite) {
                                     singleSnapshot.getRef().removeValue();
+                                    FavouritePlaceUpdatedWidget
+                                            .startActionUpdateFavWidgets(getBaseContext());
                                 }
                             }
                         }

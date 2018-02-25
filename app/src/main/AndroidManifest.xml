@@ -58,13 +58,15 @@
         </provider>
 
         <!-- Widget service -->
-        <receiver android:name="AppWidgetProvider" >
+        <receiver android:name=".AppWidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget_info" />
         </receiver>
+
+        <service android:name=".FavouritePlaceUpdatedWidget"/>
     </application>
 
 </manifest>

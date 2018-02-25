@@ -65,6 +65,7 @@ public class PostsFragment extends android.support.v4.app.Fragment implements
         }
         imageHolder.setLayoutManager(layoutManager);
 
+
         getImageUrlsAndLocation();
         return view;
     }

@@ -2,6 +2,7 @@ package ramji.travelers.posts;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ramji.travelers.AppWidgetProvider;
 import ramji.travelers.GlideApp;
 import ramji.travelers.R;
 
@@ -60,7 +62,6 @@ public class PostImagesAdapter extends RecyclerView.Adapter<PostImagesAdapter
 
     @Override
     public void onBindViewHolder(MasonryViewHolder holder, int position) {
-
         GlideApp
                 .with(mContext)
                 .load(imageUrl.get(position))
@@ -73,6 +74,7 @@ public class PostImagesAdapter extends RecyclerView.Adapter<PostImagesAdapter
         if (!Objects.equals(fileType.get(position), "image/jpeg")){
             holder.video_icon.setVisibility(View.VISIBLE);
         }
+
     }
 
     @Override
