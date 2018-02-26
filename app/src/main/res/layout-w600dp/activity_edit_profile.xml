@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="@dimen/appbar_elevation"
+    app:cardElevation="@dimen/appbar_elevation"
+    android:layout_margin="@dimen/user_details_layout_margin">
+
+    <RelativeLayout
+        android:id="@+id/EP_LL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/nextBar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:layout_weight="1.5"
+            android:padding="@dimen/add_post_text_padding"
+            android:background="@drawable/bottom_border">
+
+            <ImageView
+                android:id="@+id/EP_crossImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_cross"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/EP_Done"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:gravity="center_vertical"
+                android:layout_alignParentEnd="true"
+                android:padding="5dp"
+                android:text="@string/done"
+                android:textSize="@dimen/add_post_text"
+                android:textColor="@android:color/black" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_below="@id/nextBar"
+            android:weightSum="2">
+
+        <ImageView
+            android:id="@+id/EP_profile_image"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="@dimen/share_image_padding"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/EP_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="profile name"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/EP_text_size"
+                    android:layout_marginStart="@dimen/EP_padding"
+                    android:layout_marginEnd="@dimen/EP_padding"/>
+
+                <EditText
+                    android:id="@+id/EP_aboutUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="About me"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/EP_text_size"
+                    android:layout_marginStart="@dimen/EP_padding"
+                    android:layout_marginEnd="@dimen/EP_padding"/>
+                <EditText
+                    android:id="@+id/EP_userCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="City"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/EP_text_size"
+                    android:layout_marginStart="@dimen/EP_padding"
+                    android:layout_marginEnd="@dimen/EP_padding"/>
+            </LinearLayout>
+
+    </LinearLayout>
+    </RelativeLayout>
+    <ProgressBar
+        android:id="@+id/mProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible"/>
+
+</android.support.v7.widget.CardView>

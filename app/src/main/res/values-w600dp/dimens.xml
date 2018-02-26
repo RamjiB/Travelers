@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="login_signup_padding">50dp</dimen>
+    <dimen name="login_signup_tv_padding">10dp</dimen>
+    <dimen name="user_details_layout_margin">55dp</dimen>
+    <dimen name="user_details_tab_end_margin">25dp</dimen>
+    <dimen name="edit_profile_padding">10dp</dimen>
+    <dimen name="user_details_tab_margin">40dp</dimen>
+    <dimen name="user_details_tab_elevation">12dp</dimen>
+    <dimen name="location_text_size">14sp</dimen>
+    <dimen name="share_image_padding">20dp</dimen>
+
+</resources>
