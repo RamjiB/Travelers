@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.IntentSender;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -63,6 +61,7 @@ import ramji.travelers.FirebaseMethods;
 import ramji.travelers.GlideApp;
 import ramji.travelers.R;
 
+@SuppressWarnings("ALL")
 public class NextActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener,PlaceAdapter.onItemClickListener{
 
@@ -70,7 +69,7 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
     private static final String IMAGE_URL = "imageUrl";
 
     private static final int REQUEST_CODE = 100;
-    protected static final int REQUEST_CHECK_SETTINGS = 0x1;
+    private static final int REQUEST_CHECK_SETTINGS = 0x1;
 
     @BindView(R.id.crossImage)
     ImageView crossImage;
@@ -102,21 +101,17 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
     //Firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference myRef;
     private FirebaseMethods mFirebaseMethods;
 
     private int imageCount = 0;
     private String imageUrl;
     private Context mContext;
-    private com.google.android.gms.location.LocationListener locationListener;
 
     //Google places vars
-    protected GeoDataClient mGeoDataClient;
-    protected PlaceDetectionClient mPlaceDetectionClient;
+    private GeoDataClient mGeoDataClient;
+    private PlaceDetectionClient mPlaceDetectionClient;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
-    private PendingResult<LocationSettingsResult> result;
 
 
     private AutocompletePredictionBufferResponse prediction;
@@ -320,7 +315,7 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
                 .addLocationRequest(mLocationRequest)
                 .setAlwaysShow(true);
 
-        result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
+        PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
         result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
             @Override
             public void onResult(@NonNull LocationSettingsResult locationSettingsResult) {
@@ -426,7 +421,7 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
 
     }
 
-    public void hideSoftKeyboard() {
+    private void hideSoftKeyboard() {
         if (this.getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager)
                     this.getSystemService(INPUT_METHOD_SERVICE);
@@ -441,8 +436,8 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
     private void setupFirebaseAuth(){
         Log.d(TAG,"setupFirebaseAuth: setting up firebase auth.");
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = mFirebaseDatabase.getReference();
         Log.d(TAG,"onDataChange: image count: "+ imageCount);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {

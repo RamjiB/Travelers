@@ -76,7 +76,8 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:weightSum="3"
-        android:visibility="invisible">
+        android:visibility="invisible"
+        android:baselineAligned="false">
 
         <FrameLayout
             android:id="@+id/userDetailsFragmentPart"

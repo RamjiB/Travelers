@@ -2,13 +2,11 @@ package ramji.travelers.posts;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -18,17 +16,14 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ramji.travelers.AppWidgetProvider;
 import ramji.travelers.GlideApp;
 import ramji.travelers.R;
 
 public class PostImagesAdapter extends RecyclerView.Adapter<PostImagesAdapter
         .MasonryViewHolder> {
 
-    private static final String TAG = "PostImagesAdapter";
-
-    private Context mContext;
-    private ImageClickListener imageClickListener;
+    private final Context mContext;
+    private final ImageClickListener imageClickListener;
     private ArrayList<String> imageUrl = new ArrayList<>();
     private ArrayList<String> location = new ArrayList<>();
     private ArrayList<String> caption = new ArrayList<>();

@@ -2,6 +2,7 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:cardCornerRadius="@dimen/appbar_elevation"
@@ -25,7 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_cross"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/cross_image_description" />
 
         <TextView
             android:id="@+id/add_post_share"
@@ -37,7 +39,8 @@
             android:textSize="@dimen/add_post_text"
             android:textColor="@android:color/black"
             android:drawablePadding="@dimen/add_post_text_padding"
-            android:drawableEnd="@drawable/ic_arrow_forward_black_24dp"/>
+            android:drawableEnd="@drawable/ic_arrow_forward_black_24dp"
+            tools:ignore="RelativeOverlap" />
 
     </RelativeLayout>
 
@@ -79,17 +82,16 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/location"
                 android:textSize="@dimen/location_text_size"
-                android:layout_below="@+id/image_share_LL"
                 android:padding="@dimen/add_post_text"/>
 
             <TextView
                 android:id="@+id/currentLocation"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/current_location_text_size"
-                android:layout_below="@+id/location_search"
                 android:text="@string/currentLocation"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/add_post_text_padding"
+                android:paddingEnd="@dimen/add_post_text_padding"
                 android:drawablePadding="@dimen/add_post_text"
                 android:drawableStart="@drawable/ic_pick_location"/>
 
@@ -97,7 +99,6 @@
                 android:id="@+id/location_adapter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/currentLocation"
                 android:layout_marginStart="@dimen/add_post_text_padding"
                 android:padding="@dimen/add_post_text"/>
         </LinearLayout>

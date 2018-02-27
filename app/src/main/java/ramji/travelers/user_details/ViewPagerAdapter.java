@@ -3,15 +3,14 @@ package ramji.travelers.user_details;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
-public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     private static final String TAG = "AddPostViewPagerAdapter";
 
-    private String title[] = {"Shared","Saved"};
+    private final String[] title = {"Shared","Saved"};
 
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);

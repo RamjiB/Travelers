@@ -7,7 +7,6 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,9 +21,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -60,16 +57,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.net.URISyntaxException;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ramji.travelers.add_post.AddPost;
-import ramji.travelers.image_details.ImageDetailsView;
 import ramji.travelers.login.ProfileLoginFragment;
 import ramji.travelers.posts.PostsFragment;
 
+@SuppressWarnings("ALL")
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "HomeActivity";
@@ -78,8 +74,6 @@ public class HomeActivity extends AppCompatActivity {
     private static final String IMAGE_DESCRIPTION = "description";
     private static final String PHOTO_ID = "photo_id";
     private static final String FILE_TYPE = "file_type";
-
-    private static final String FROM_SIGN_UP_ACTIVTIY = "from_sign_up_activity";
 
     @BindView(R.id.postButton)
     Button posts;
@@ -143,7 +137,6 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     private SimpleExoPlayer player;
-    private Intent intent;
 
     private String getImageUrl;
     private String getPostLocation;
@@ -153,6 +146,7 @@ public class HomeActivity extends AppCompatActivity {
     private String getFileType;
     private String userId = "";
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,10 +156,8 @@ public class HomeActivity extends AppCompatActivity {
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
 
-        postsFragment = new PostsFragment();
-        fm = getSupportFragmentManager();
 
-        profileLoginFragment = new ProfileLoginFragment();
+        fm = getSupportFragmentManager();
 
         setupFirebaseAuth();
 
@@ -175,35 +167,45 @@ public class HomeActivity extends AppCompatActivity {
 
         Log.i(TAG, "fromSignUpActivity: " + fromSignUpActivity);
 
-        if (!fromSignUpActivity) {
+        if (savedInstanceState == null) {
 
-            fm.beginTransaction()
-                    .add(R.id.fragmentPart, postsFragment).commit();
+            if (!fromSignUpActivity) {
+                postsFragment = new PostsFragment();
+                fm.beginTransaction()
+                        .add(R.id.fragmentPart, postsFragment).commit();
+            } else {
 
-        } else {
+                fm.beginTransaction().replace(R.id.fragmentPart, profileLoginFragment).commit();
+                profile.setBackgroundColor(getColor(R.color.colorPrimary));
+                posts.setBackgroundColor(getColor(R.color.white));
 
-            fm.beginTransaction().replace(R.id.fragmentPart, profileLoginFragment).commit();
-            profile.setBackgroundColor(getColor(R.color.colorPrimary));
-            posts.setBackgroundColor(getColor(R.color.white));
-
+            }
         }
+
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 profile.setBackgroundColor(getColor(R.color.colorPrimary));
                 posts.setBackgroundColor(getColor(R.color.white));
                 profile.setElevation(
                         getResources().getDimension(R.dimen.raised_button_pressed_elevation));
                 posts.setElevation(
                         getResources().getDimension(R.dimen.raised_button_resting_elevation));
+                Log.i(TAG,"postFragment not added");
+                profileLoginFragment = new ProfileLoginFragment();
                 fm.beginTransaction()
                         .replace(R.id.fragmentPart, profileLoginFragment).commit();
+
             }
+
         });
+
 
         posts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                postsFragment = new PostsFragment();
                 profile.setBackgroundColor(getColor(R.color.white));
                 posts.setBackgroundColor(getColor(R.color.colorPrimary));
                 profile.setElevation(
@@ -232,7 +234,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
             });
 
-            intent = getIntent();
+            Intent intent = getIntent();
 
             if (intent.hasExtra(IMAGE_URL) && intent.hasExtra(POST_LOCATION) &&
                     intent.hasExtra(IMAGE_DESCRIPTION) && intent.hasExtra(PHOTO_ID)
@@ -387,7 +389,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    public void setVideoPlayer() {
+    private void setVideoPlayer() {
 
         //Create a default TrackSelector
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();

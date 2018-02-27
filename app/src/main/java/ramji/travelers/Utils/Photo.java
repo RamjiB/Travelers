@@ -18,7 +18,7 @@ public class Photo implements Parcelable{
     public Photo() {
     }
 
-    protected Photo(Parcel in) {
+    private Photo(Parcel in) {
         caption = in.readString();
         date_created = in.readString();
         image_path = in.readString();
@@ -29,7 +29,7 @@ public class Photo implements Parcelable{
         imageFile = in.readString();
     }
 
-    public static final Creator<Photo> CREATOR = new Creator<Photo>() {
+    private static final Creator<Photo> CREATOR = new Creator<Photo>() {
         @Override
         public Photo createFromParcel(Parcel in) {
             return new Photo(in);

@@ -6,13 +6,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
-import ramji.travelers.user_details.TabFragment;
-
-public class AddPostViewPagerAdapter extends FragmentStatePagerAdapter {
+class AddPostViewPagerAdapter extends FragmentStatePagerAdapter {
 
     private static final String TAG = "AddPostViewPagerAdapter";
 
-    private String title[] = {"GALLERY","CAMERA","VIDEO"};
+    private final String[] title = {"GALLERY","CAMERA","VIDEO"};
 
     public AddPostViewPagerAdapter(FragmentManager fm) {
         super(fm);

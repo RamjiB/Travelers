@@ -19,7 +19,8 @@
         android:src="@drawable/ic_play_arrow_black_24dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        android:contentDescription="@string/video_icon" />
 
 </RelativeLayout>
 

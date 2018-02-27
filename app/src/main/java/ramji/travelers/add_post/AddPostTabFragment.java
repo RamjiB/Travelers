@@ -4,9 +4,6 @@ package ramji.travelers.add_post;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -31,32 +28,26 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.VideoView;
 
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ramji.travelers.GlideApp;
 import ramji.travelers.Utils.FilePaths;
 import ramji.travelers.Utils.FileSearch;
 import ramji.travelers.R;
 
 import static android.app.Activity.RESULT_OK;
-import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO;
 
 
+@SuppressWarnings("ALL")
 public class AddPostTabFragment extends android.support.v4.app.Fragment implements
         GalleryImagesGridAdapter.ImageClickListener,SurfaceHolder.Callback,View.OnClickListener{
 
@@ -327,7 +318,6 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
                         Manifest.permission.RECORD_AUDIO
                 }, REQUEST_CODE);
             }
-            return;
         }else{
             readStoragePermission = true;
             cameraPermission = true;
@@ -408,7 +398,7 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
     }
 
     private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
         String imageFileName = "TRAV_JPEG_"+ timeStamp +"_";
         File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
@@ -513,7 +503,7 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
 
     }
 
-    public static android.hardware.Camera getCameraInstance() {
+    private static android.hardware.Camera getCameraInstance() {
         android.hardware.Camera c = null;
         try {
             c = android.hardware.Camera.open(); // attempt to get a Camera instance

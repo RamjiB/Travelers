@@ -2,25 +2,17 @@ package ramji.travelers;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import java.util.ArrayList;
 
-import ramji.travelers.image_details.ImageDetailsView;
-
 
 public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
 
     private static final String TAG = "AppWidgetProvider";
-
-    public static final String UPDATE_MEETING_ACTION = "android.appwidget.action.APPWIDGET_UPDATE";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -58,7 +50,7 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
             remoteViews.setTextViewText(R.id.text_View,location_list);
         }
         Log.i(TAG,"location_list: "+ location.toString());
-        remoteViews.setOnClickPendingIntent(R.id.locationText,pendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.text_View,pendingIntent);
         appWidgetManager.updateAppWidget(appWidgetId,remoteViews);
     }
 

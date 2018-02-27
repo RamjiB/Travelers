@@ -1,7 +1,6 @@
 package ramji.travelers.image_details;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -13,9 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -32,7 +29,6 @@ import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.LoopingMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
-import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
@@ -62,6 +58,7 @@ import ramji.travelers.HomeActivity;
 import ramji.travelers.R;
 
 
+@SuppressWarnings("ALL")
 public class ImageDetailsView extends AppCompatActivity {
 
     private static final String TAG = "ImageDetailsView";
@@ -257,7 +254,7 @@ public class ImageDetailsView extends AppCompatActivity {
 
     }
 
-    public void setVideoPlayer() {
+    private void setVideoPlayer() {
 
         //Create a default TrackSelector
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
@@ -281,7 +278,7 @@ public class ImageDetailsView extends AppCompatActivity {
         //Video Source
         Uri videoUri = Uri.parse(getImageUrl);
 
-        //Measures bandwidth uring playback. Can be null if not required.
+        //Measures bandwidth using playback. Can be null if not required.
         DefaultBandwidthMeter bandwidthMeterA = new DefaultBandwidthMeter();
 
         //Produces DataSource instances through which media data is loaded.

@@ -20,6 +20,7 @@
         android:src="@drawable/ic_selected"
         android:backgroundTint="@color/light_blue"
         android:layout_alignParentEnd="true"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        android:contentDescription="@string/tick_mark" />
 
 </RelativeLayout>

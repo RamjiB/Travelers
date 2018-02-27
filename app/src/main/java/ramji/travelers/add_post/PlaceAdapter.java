@@ -20,7 +20,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
 
     private ArrayList<String> placesPrimary = new ArrayList<>();
     private ArrayList<String> placesSec = new ArrayList<>();
-    private onItemClickListener mOnItemClickListener;
+    private final onItemClickListener mOnItemClickListener;
 
     interface onItemClickListener{
         void onItemClick(int position);

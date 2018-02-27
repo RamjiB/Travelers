@@ -10,9 +10,6 @@ import android.support.design.widget.TextInputEditText;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -73,11 +70,6 @@ public class ProfileLoginFragment extends android.support.v4.app.Fragment{
 
     @BindView(R.id.loginLayout)
     LinearLayout loginLayout;
-
-    private UserDetailsFragment userDetailsFragment;
-    private UserImagesFragment userImagesFragment;
-    private android.support.v4.app.FragmentManager fm;
-
 
 
     //Firebase
@@ -226,18 +218,18 @@ public class ProfileLoginFragment extends android.support.v4.app.Fragment{
 
     private void moveIntoUserProfile() {
 
-        userDetailsFragment = new UserDetailsFragment();
-        userImagesFragment = new UserImagesFragment();
-        fm = getFragmentManager();
+        UserDetailsFragment userDetailsFragment = new UserDetailsFragment();
+        UserImagesFragment userImagesFragment = new UserImagesFragment();
+        android.support.v4.app.FragmentManager fm = getFragmentManager();
 
         loginLayout.setVisibility(View.INVISIBLE);
 
         fm.beginTransaction()
-                .add(R.id.userDetailsFragmentPart,userDetailsFragment)
+                .add(R.id.userDetailsFragmentPart, userDetailsFragment)
                 .commit();
 
         fm.beginTransaction()
-                .add(R.id.userImagesFragmentPart,userImagesFragment)
+                .add(R.id.userImagesFragmentPart, userImagesFragment)
                 .commit();
 
         userProfileLayout.setVisibility(View.VISIBLE);

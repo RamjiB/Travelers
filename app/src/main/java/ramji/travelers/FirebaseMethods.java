@@ -4,7 +4,6 @@ package ramji.travelers;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -32,11 +31,10 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import ramji.travelers.Utils.FilePaths;
-import ramji.travelers.Utils.ImageManager;
 import ramji.travelers.Utils.Photo;
 import ramji.travelers.Utils.Users;
 
@@ -44,11 +42,10 @@ public class FirebaseMethods {
     private static final String TAG = "FirebaseMethods";
 
 
-    private Context mContext;
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference myRef;
-    private FirebaseAuth mAuth;
-    private StorageReference mStorageRefernece;
+    private final Context mContext;
+    private final DatabaseReference myRef;
+    private final FirebaseAuth mAuth;
+    private final StorageReference mStorageRefernece;
     private String userID;
 
     private double mPhotoUploadProgress;
@@ -56,7 +53,7 @@ public class FirebaseMethods {
     public FirebaseMethods(Context context){
 
         mContext = context;
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
         mAuth = FirebaseAuth.getInstance();
         mStorageRefernece = FirebaseStorage.getInstance().getReference();
@@ -150,7 +147,7 @@ public class FirebaseMethods {
 
             Uri file = Uri.fromFile(new File(imgUrl));
 
-            UploadTask uploadTask = null;
+            UploadTask uploadTask;
             uploadTask =storageReference.putFile(file);
 
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -189,7 +186,7 @@ public class FirebaseMethods {
                     double progress = (100 * taskSnapshot.getBytesTransferred())/ taskSnapshot.getTotalByteCount();
 
                     if (progress - 15 > mPhotoUploadProgress){
-                        Toast.makeText(mContext, "photo upload progress: "+ String.format("%.0f",progress) + "%", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, mContext.getString(R.string.photo_upload_progress)+ String.format(Locale.ENGLISH,"%.0f",progress) + "%", Toast.LENGTH_SHORT).show();
                         mPhotoUploadProgress = progress;
                     }
                     Log.d(TAG,"onProgress: upload progress: "+ progress+ " % done");
@@ -214,7 +211,7 @@ public class FirebaseMethods {
 
         Uri file = Uri.fromFile(new File(imgUrl));
 
-        UploadTask uploadTask = null;
+        UploadTask uploadTask;
         uploadTask =storageReference.putFile(file);
 
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -249,7 +246,8 @@ public class FirebaseMethods {
                 double progress = (100 * taskSnapshot.getBytesTransferred())/ taskSnapshot.getTotalByteCount();
 
                 if (progress - 15 > mPhotoUploadProgress){
-                    Toast.makeText(mContext, "photo upload progress: "+ String.format("%.0f",progress) + "%", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, mContext.getString(R.string.photo_upload_progress)+
+                            String.format(Locale.ENGLISH,"%.0f",progress)+ "%", Toast.LENGTH_SHORT).show();
                     mPhotoUploadProgress = progress;
                 }
                 Log.d(TAG,"onProgress: upload progress: "+ progress+ " % done");

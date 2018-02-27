@@ -24,8 +24,8 @@ public class GalleryImagesGridAdapter extends RecyclerView.Adapter<GalleryImages
 
     private static final String TAG = "PostImagesAdapter";
 
-    private Context mContext;
-    private ImageClickListener imageClickListener;
+    private final Context mContext;
+    private final ImageClickListener imageClickListener;
     private ArrayList<String> imageUrl = new ArrayList<>();
 
 

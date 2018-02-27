@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Travelers</string>
 
     <string name="posts">Posts</string>
@@ -20,7 +20,6 @@
     //Firebase Database
     <string name="dbname_users">users</string>
     <string name="username">username</string>
-    <string name="field_emailId">emailId</string>
     <string name="new_post_menu">New Post</string>
     <string name="sign_out">Sign out</string>
 
@@ -34,7 +33,7 @@
     <string name="currentLocation">Current Location</string>
     <string name="dbname_user_photos">user_photos</string>
     <string name="new_photo">new_photo</string>
-    <string name="profile_photo">profile_photo</string>
+    <string name="profile_photo" tools:keep="@string/profile_photo">profile_photo</string>
     <string name="dbname_photos">photos</string>
     <string name="db_image_path">image_path</string>
     <string name="db_location">location</string>
@@ -48,9 +47,19 @@
     <string name="favourite">favourite</string>
     <string name="db_photo_id">photo_id</string>
     <string name="open_camera">Open Camera</string>
-    <string name="open_video">OPEN VIDEO</string>
     <string name="db_fileType">imageFile</string>
     <string name="capturing_video">capturing video</string>
     <string name="widget_empty_string">No saved locations</string>
+    <string name="cross_image_description">Closing the activity</string>
+    <string name="tick_mark">selected image</string>
+    <string name="video_icon">video icon</string>
+    <string name="photo_upload_progress">photo upload progress:</string>
+    <string name="profile_name_hint">profile name</string>
+    <string name="about_me_hint">About me</string>
+    <string name="city_hint">City</string>
+    <string name="not_favourite_description">not favourite</string>
+    <string name="favourite_descrip">favourite</string>
+    <string name="add_new_fab">Add new FAB</string>
+
 
 </resources>

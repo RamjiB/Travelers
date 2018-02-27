@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/EP_LL"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -18,7 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_cross"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/cross_image_description" />
 
         <TextView
             android:id="@+id/EP_Done"
@@ -29,7 +31,8 @@
             android:padding="5dp"
             android:text="@string/done"
             android:textSize="@dimen/add_post_text"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            tools:ignore="RelativeOverlap" />
 
     </RelativeLayout>
 
@@ -38,13 +41,14 @@
         android:layout_width="@dimen/EP_image_width"
         android:layout_height="@dimen/EP_image_width"
         android:layout_gravity="center_horizontal"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        android:contentDescription="@string/profile_photo" />
 
     <EditText
         android:id="@+id/EP_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="profile name"
+        android:hint="@string/profile_name_hint"
         android:textColor="@android:color/black"
         android:textSize="@dimen/EP_text_size"
         android:layout_marginStart="@dimen/EP_padding"
@@ -54,7 +58,7 @@
         android:id="@+id/EP_aboutUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="About me"
+        android:hint="@string/about_me_hint"
         android:textColor="@android:color/black"
         android:textSize="@dimen/EP_text_size"
         android:layout_marginStart="@dimen/EP_padding"
@@ -63,7 +67,7 @@
         android:id="@+id/EP_userCity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="City"
+        android:hint="@string/city_hint"
         android:textColor="@android:color/black"
         android:textSize="@dimen/EP_text_size"
         android:layout_marginStart="@dimen/EP_padding"

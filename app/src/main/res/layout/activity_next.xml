@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -16,7 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_cross"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/cross_image_description" />
 
         <TextView
             android:id="@+id/add_post_share"
@@ -28,7 +30,8 @@
             android:textSize="@dimen/add_post_text"
             android:textColor="@android:color/black"
             android:drawablePadding="@dimen/add_post_text_padding"
-            android:drawableEnd="@drawable/ic_arrow_forward_black_24dp"/>
+            android:drawableEnd="@drawable/ic_arrow_forward_black_24dp"
+            tools:ignore="RelativeOverlap" />
 
     </RelativeLayout>
 
@@ -72,6 +75,7 @@
         android:text="@string/currentLocation"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/add_post_text_padding"
+        android:paddingEnd="@dimen/add_post_text_padding"
         android:drawablePadding="@dimen/add_post_text"
         android:drawableStart="@drawable/ic_pick_location"/>
 

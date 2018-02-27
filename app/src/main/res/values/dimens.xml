@@ -2,7 +2,6 @@
 <resources>
     <dimen name="title_text_size">20sp</dimen>
     <dimen name="appbar_elevation">4dp</dimen>
-    <dimen name="appbar_padding">10dp</dimen>
     <dimen name="image_holder_padding">5dp</dimen>
     <dimen name="login_signup_tv_padding">5dp</dimen>
     <dimen name="login_signup_padding">15dp</dimen>
@@ -33,7 +32,6 @@
     <dimen name="app_bar_elevation">4dp</dimen>
     <dimen name="image_post_ht">300dp</dimen>
     <dimen name="capture_icon_top_margin">30dp</dimen>
-    <dimen name="tab_bottom_margin">20dp</dimen>
     <dimen name="raised_button_resting_elevation">2dp</dimen>
     <dimen name="raised_button_pressed_elevation">8dp</dimen>
     <dimen name="fab_end_margin">40dp</dimen>

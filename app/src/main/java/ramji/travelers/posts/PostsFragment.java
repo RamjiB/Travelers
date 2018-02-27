@@ -1,12 +1,13 @@
 package ramji.travelers.posts;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,8 @@ public class PostsFragment extends android.support.v4.app.Fragment implements
     ProgressBar mProgressBar;
 
     private PostImagesAdapter.ImageClickListener imageClickListener;
-    private GridLayoutManager layoutManager;
+    private Context mContext;
+    private Fragment fragment;
 
     @Nullable
     @Override
@@ -56,12 +58,15 @@ public class PostsFragment extends android.support.v4.app.Fragment implements
 
         imageClickListener = this;
         imageHolder.setHasFixedSize(true);
+        mContext = getContext();
+        fragment = this;
 
         mProgressBar.setVisibility(View.VISIBLE);
+        GridLayoutManager layoutManager;
         if (getResources().getBoolean(R.bool.is_phone)) {
-             layoutManager = new GridLayoutManager(getContext(), 2);
-        }else{
-            layoutManager = new GridLayoutManager(getContext(),4);
+            layoutManager = new GridLayoutManager(mContext, 2);
+        } else {
+            layoutManager = new GridLayoutManager(mContext, 4);
         }
         imageHolder.setLayoutManager(layoutManager);
 
@@ -84,36 +89,41 @@ public class PostsFragment extends android.support.v4.app.Fragment implements
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
-                   imageUrls.add(singleSnapshot.child(getString(R.string.db_image_path))
-                           .getValue().toString());
-                   Log.i(TAG,"imageUrls: "+ imageUrls);
-                   location.add(singleSnapshot.child(getString(R.string.db_location))
-                           .getValue().toString());
-                   caption.add(singleSnapshot.child(getString(R.string.db_caption))
-                            .getValue().toString());
-                   photo_id.add(singleSnapshot.child(getString(R.string.db_photo_id))
-                            .getValue().toString());
-                   fileType.add(singleSnapshot.child(getString(R.string.db_fileType))
-                            .getValue().toString());
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                    Log.i(TAG, "getting details from firebase");
+                    if (fragment.isAdded()) {
+                        imageUrls.add(singleSnapshot.child(getString(R.string.db_image_path))
+                                .getValue().toString());
+                        Log.i(TAG, "imageUrls: " + imageUrls);
+                        location.add(singleSnapshot.child(getString(R.string.db_location))
+                                .getValue().toString());
+                        caption.add(singleSnapshot.child(getString(R.string.db_caption))
+                                .getValue().toString());
+                        photo_id.add(singleSnapshot.child(getString(R.string.db_photo_id))
+                                .getValue().toString());
+                        fileType.add(singleSnapshot.child(getString(R.string.db_fileType))
+                                .getValue().toString());
 
+                    }
+
+                    Log.i(TAG, "setting values in adapter");
+                    if (mContext != null) {
+                        PostImagesAdapter adapter = new PostImagesAdapter(mContext,
+                                imageClickListener,
+                                imageUrls,
+                                location,
+                                caption, photo_id, fileType);
+                        imageHolder.setAdapter(adapter);
+                        mProgressBar.setVisibility(View.INVISIBLE);
+                    }
                 }
-
-                PostImagesAdapter adapter = new PostImagesAdapter(getContext(),
-                        imageClickListener,
-                        imageUrls,
-                        location,
-                        caption,photo_id,fileType);
-                imageHolder.setAdapter(adapter);
-                mProgressBar.setVisibility(View.INVISIBLE);
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+
     }
 
     @Override

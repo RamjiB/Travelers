@@ -25,7 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_cross"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/cross_image_description" />
 
     </RelativeLayout>
 
@@ -65,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:text="location"
+            android:text="@string/location"
             android:gravity="center_vertical"
             android:textColor="@android:color/black"
             android:textSize="@dimen/location_text_size"
@@ -79,7 +80,7 @@
             android:src="@drawable/ic_not_fav"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/location_padding"
-            android:contentDescription="not favourite" />
+            android:contentDescription="@string/not_favourite_description" />
 
         <ImageView
             android:id="@+id/fav"
@@ -88,7 +89,7 @@
             android:src="@drawable/ic_fav"
             android:padding="@dimen/location_padding"
             android:layout_alignParentEnd="true"
-            android:contentDescription="favourite"
+            android:contentDescription="@string/favourite_descrip"
             android:visibility="invisible"/>
     </RelativeLayout>
 

@@ -43,7 +43,6 @@ public class TabFragment extends android.support.v4.app.Fragment implements
 
     private int position;
     private ImagesGridAdapter.ImageClickListener imageClickListener;
-    private GridLayoutManager gridLayoutManager;
 
     @BindView(R.id.user_images_rv)
     RecyclerView imagesRecyclerView;
@@ -84,6 +83,7 @@ public class TabFragment extends android.support.v4.app.Fragment implements
         Log.i(TAG,"Tab Fragment: onCreateView");
 
         mProgressBar.setVisibility(View.VISIBLE);
+        GridLayoutManager gridLayoutManager;
         if (getResources().getBoolean(R.bool.is_phone))
             gridLayoutManager = new GridLayoutManager(getContext(),3);
         else
@@ -110,7 +110,7 @@ public class TabFragment extends android.support.v4.app.Fragment implements
         final ArrayList<String> caption = new ArrayList<>();
         final ArrayList<String> photo_id = new ArrayList<>();
         final ArrayList<String> fileType = new ArrayList<>();
-        Query query = null;
+        Query query;
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         if (Objects.equals(photoType, getString(R.string.dbname_saved_photos))) {
             query = databaseReference.child(getString(R.string.dbname_saved_photos))

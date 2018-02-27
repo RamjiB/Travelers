@@ -80,7 +80,7 @@ public class Users implements Parcelable{
         this.about_me = about_me;
     }
 
-    protected Users(Parcel in) {
+    private Users(Parcel in) {
         username = in.readString();
         user_id = in.readString();
         profile_image_path = in.readString();
@@ -88,7 +88,7 @@ public class Users implements Parcelable{
         about_me = in.readString();
     }
 
-    public static final Creator<Users> CREATOR = new Creator<Users>() {
+    private static final Creator<Users> CREATOR = new Creator<Users>() {
         @Override
         public Users createFromParcel(Parcel in) {
             return new Users(in);
