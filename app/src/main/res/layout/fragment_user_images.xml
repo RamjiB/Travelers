@@ -14,9 +14,9 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags = "scroll"
+            app:layout_scrollFlags="scroll"
             app:tabMode="fixed"
-            app:tabGravity="fill"/>
+            app:tabGravity="fill" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -24,6 +24,6 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/appBar"/>
+        android:layout_below="@id/appBar" />
 
 </RelativeLayout>

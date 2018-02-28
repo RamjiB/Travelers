@@ -37,7 +37,7 @@ import ramji.travelers.user_details.UserImagesFragment;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
-public class ProfileLoginFragment extends android.support.v4.app.Fragment{
+public class ProfileLoginFragment extends android.support.v4.app.Fragment {
 
     private static final String TAG = "ProfileLoginFragment";
 
@@ -81,8 +81,8 @@ public class ProfileLoginFragment extends android.support.v4.app.Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_user,container,false);
-        ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.fragment_user, container, false);
+        ButterKnife.bind(this, view);
 
         loginLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,9 +94,9 @@ public class ProfileLoginFragment extends android.support.v4.app.Fragment{
 
         setupFirebaseAuth();
 
-        if (mAuth.getCurrentUser() != null){
+        if (mAuth.getCurrentUser() != null) {
             moveIntoUserProfile();
-        }else {
+        } else {
 
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -130,10 +130,10 @@ public class ProfileLoginFragment extends android.support.v4.app.Fragment{
                     email.setHint(getString(R.string.email));
                     email.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                     new AlertDialog.Builder(getContext())
-                            .setTitle("Reset Password")
-                            .setMessage("Do you want to reset your password?")
+                            .setTitle(getString(R.string.reset_password))
+                            .setMessage(getString(R.string.ask_for_password_reset))
                             .setView(email)
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     if (!Objects.equals(email.getText().toString(), "")) {
@@ -144,14 +144,14 @@ public class ProfileLoginFragment extends android.support.v4.app.Fragment{
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful())
                                                             Toast.makeText(getContext(),
-                                                                    "Reset Link sent to your email",
+                                                                    getContext().getString(R.string.reset_link_to_email),
                                                                     Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
                                     }
                                 }
                             })
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.cancel();
@@ -175,8 +175,8 @@ public class ProfileLoginFragment extends android.support.v4.app.Fragment{
         if (Email.equals("") || Password.equals("")) {
             Toast.makeText(getContext(), getString(R.string.empty_fields_signup_activity),
                     Toast.LENGTH_SHORT).show();
-        }else{
-            mAuth.signInWithEmailAndPassword(Email,Password)
+        } else {
+            mAuth.signInWithEmailAndPassword(Email, Password)
                     .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -184,9 +184,10 @@ public class ProfileLoginFragment extends android.support.v4.app.Fragment{
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             if (user == null) {
-                                Toast.makeText(getContext(), "user not registered", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), getContext().getString(R.string.user_not_registered)
+                                        , Toast.LENGTH_SHORT).show();
                                 mProgressBar.setVisibility(View.INVISIBLE);
-                            }else {
+                            } else {
                                 if (!task.isSuccessful()) {
                                     Log.e(TAG, "signInEmail:failed ", task.getException());
                                 } else {
@@ -199,7 +200,7 @@ public class ProfileLoginFragment extends android.support.v4.app.Fragment{
 
                                         } else {
                                             Toast.makeText(getContext(),
-                                                    "Email is not verified \n check your inbox",
+                                                    getContext().getString(R.string.email_not_verified),
                                                     Toast.LENGTH_SHORT).show();
                                             mProgressBar.setVisibility(View.INVISIBLE);
                                             mAuth.signOut();
@@ -245,7 +246,7 @@ public class ProfileLoginFragment extends android.support.v4.app.Fragment{
                 FirebaseUser user = firebaseAuth.getCurrentUser();
 
                 if (user != null)
-                    Log.d(TAG,"onAuthStateChanged: signed_in "+ user.getUid());
+                    Log.d(TAG, "onAuthStateChanged: signed_in " + user.getUid());
                 else {
                     Log.d(TAG, "onAuthStateChanged: signed_out");
                     userProfileLayout.setVisibility(View.INVISIBLE);
@@ -268,10 +269,10 @@ public class ProfileLoginFragment extends android.support.v4.app.Fragment{
             mAuth.removeAuthStateListener(mAuthStateListener);
     }
 
-    private void hideSoftKeyboards(){
-        if (getActivity().getCurrentFocus() != null){
-            InputMethodManager imm =(InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),0);
+    private void hideSoftKeyboards() {
+        if (getActivity().getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
         }
     }
 }

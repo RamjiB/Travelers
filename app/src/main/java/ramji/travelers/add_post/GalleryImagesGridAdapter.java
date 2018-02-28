@@ -29,12 +29,12 @@ public class GalleryImagesGridAdapter extends RecyclerView.Adapter<GalleryImages
     private ArrayList<String> imageUrl = new ArrayList<>();
 
 
-    interface ImageClickListener{
+    interface ImageClickListener {
         void imageClick(String imageUrl);
     }
 
     public GalleryImagesGridAdapter(Context mContext
-            ,ImageClickListener imageClickListener,ArrayList<String> imageUrl) {
+            , ImageClickListener imageClickListener, ArrayList<String> imageUrl) {
 
         this.mContext = mContext;
         this.imageClickListener = imageClickListener;
@@ -44,7 +44,7 @@ public class GalleryImagesGridAdapter extends RecyclerView.Adapter<GalleryImages
 
     @Override
     public ImagesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_gallery_images,parent,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_gallery_images, parent,
                 false);
         return new ImagesViewHolder(view);
     }
@@ -64,7 +64,7 @@ public class GalleryImagesGridAdapter extends RecyclerView.Adapter<GalleryImages
 
     @Override
     public int getItemCount() {
-        Log.i(TAG,"getItemCount: "+ imageUrl.size());
+        Log.i(TAG, "getItemCount: " + imageUrl.size());
         return imageUrl.size();
     }
 
@@ -80,7 +80,7 @@ public class GalleryImagesGridAdapter extends RecyclerView.Adapter<GalleryImages
 
         public ImagesViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 
@@ -89,11 +89,11 @@ public class GalleryImagesGridAdapter extends RecyclerView.Adapter<GalleryImages
 
             String imageURL;
 
-            if (tickMark.getVisibility() == View.INVISIBLE){
+            if (tickMark.getVisibility() == View.INVISIBLE) {
                 tickMark.setVisibility(View.VISIBLE);
                 imageURL = imageUrl.get(getAdapterPosition());
                 imageClickListener.imageClick(imageURL);
-            }else
+            } else
                 tickMark.setVisibility(View.INVISIBLE);
 
         }

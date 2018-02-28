@@ -24,7 +24,7 @@ import ramji.travelers.FirebaseMethods;
 import ramji.travelers.HomeActivity;
 import ramji.travelers.R;
 
-public class SignUpActivity extends AppCompatActivity{
+public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG = "SignUpActivity";
 
@@ -79,28 +79,29 @@ public class SignUpActivity extends AppCompatActivity{
                 email = inputEmail.getText().toString();
                 password = inputPassword.getText().toString();
 
-                if (checkForInputs(username,email,password)){
+                if (checkForInputs(username, email, password)) {
 
-                    firebaseMethods.registerNewEmail(username,email,password);
+                    firebaseMethods.registerNewEmail(username, email, password);
 
-                    Intent intent = new Intent(getBaseContext(),HomeActivity.class);
-                    intent.putExtra("fromSignUpActivity",true);
+                    Intent intent = new Intent(getBaseContext(), HomeActivity.class);
+                    intent.putExtra("fromSignUpActivity", true);
                     startActivity(intent);
                 }
             }
         });
 
     }
-    private void hideSoftKeyboards(){
-        if (getCurrentFocus() != null){
-            InputMethodManager imm =(InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+
+    private void hideSoftKeyboards() {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
 
     private boolean checkForInputs(String name, String email, String password) {
-        Log.d(TAG,"checking inputs for empty values");
-        if (name.equals("") || email.equals("") || password.equals("")){
+        Log.d(TAG, "checking inputs for empty values");
+        if (name.equals("") || email.equals("") || password.equals("")) {
             Toast.makeText(this, R.string.empty_fields_signup_activity, Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -108,7 +109,7 @@ public class SignUpActivity extends AppCompatActivity{
     }
 
     private void setupFirebaseAuth() {
-        Log.d(TAG,"Setting up firebase authentication");
+        Log.d(TAG, "Setting up firebase authentication");
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = mFirebaseDatabase.getReference();

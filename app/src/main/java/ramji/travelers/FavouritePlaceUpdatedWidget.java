@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class FavouritePlaceUpdatedWidget extends IntentService{
+public class FavouritePlaceUpdatedWidget extends IntentService {
 
     private static final String TAG = "FavouritePlaceUpdatedWi";
 
@@ -32,7 +32,7 @@ public class FavouritePlaceUpdatedWidget extends IntentService{
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        Log.i(TAG,"widget onHandleIntent");
+        Log.i(TAG, "widget onHandleIntent");
         final String action = intent.getAction();
         if (ACTION_UPDATE_RECIPE_WIDGETS.equals(action))
             handleActionUpdateWidgets();
@@ -55,15 +55,15 @@ public class FavouritePlaceUpdatedWidget extends IntentService{
                     for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                         location.add(singleSnapshot
                                 .child(getString(R.string.db_location)).getValue().toString());
-                        Log.i(TAG,"locations: "+location);
+                        Log.i(TAG, "locations: " + location);
 
                         AppWidgetManager appWidgetManager = AppWidgetManager
                                 .getInstance(getApplicationContext());
                         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
-                                new ComponentName(getApplication(),AppWidgetProvider.class));
-                        Log.i(TAG,"location size: "+ location.size());
+                                new ComponentName(getApplication(), AppWidgetProvider.class));
+                        Log.i(TAG, "location size: " + location.size());
                         AppWidgetProvider.updateAppWidget(getApplicationContext()
-                                ,appWidgetManager,location,appWidgetIds);
+                                , appWidgetManager, location, appWidgetIds);
                     }
                 }
 
@@ -72,23 +72,23 @@ public class FavouritePlaceUpdatedWidget extends IntentService{
 
                 }
             });
-        }else{
-            Log.i(TAG,"locations: "+location);
+        } else {
+            Log.i(TAG, "locations: " + location);
             location.add(getResources().getString(R.string.widget_empty_string) + " \n" +
-                            "Please sign in");
+                    "Please sign in");
             AppWidgetManager appWidgetManager = AppWidgetManager
                     .getInstance(getApplicationContext());
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
-                    new ComponentName(getApplication(),AppWidgetProvider.class));
-            Log.i(TAG,"location size: "+ location.size());
-            AppWidgetProvider.updateAppWidget(this,appWidgetManager,location,appWidgetIds);
+                    new ComponentName(getApplication(), AppWidgetProvider.class));
+            Log.i(TAG, "location size: " + location.size());
+            AppWidgetProvider.updateAppWidget(this, appWidgetManager, location, appWidgetIds);
         }
 
 
     }
 
-    public static void startActionUpdateFavWidgets(Context context){
-        Intent intent = new Intent(context,FavouritePlaceUpdatedWidget.class);
+    public static void startActionUpdateFavWidgets(Context context) {
+        Intent intent = new Intent(context, FavouritePlaceUpdatedWidget.class);
         intent.setAction(ACTION_UPDATE_RECIPE_WIDGETS);
         context.startService(intent);
     }

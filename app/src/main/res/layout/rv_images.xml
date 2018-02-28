@@ -37,7 +37,7 @@
             android:textSize="@dimen/location_text_size"
             android:padding="@dimen/location_text_padding"
             tools:text="location"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 

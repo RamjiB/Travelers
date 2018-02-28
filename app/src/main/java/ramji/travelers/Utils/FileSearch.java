@@ -12,15 +12,16 @@ public class FileSearch {
 
     /**
      * Search a directory and return a list of all **directories** contained inside
+     *
      * @param directory
      * @return
      */
-    public static ArrayList<String> getDirectoryPaths(String directory){
+    public static ArrayList<String> getDirectoryPaths(String directory) {
         ArrayList<String> pathArray = new ArrayList<>();
         File file = new File(directory);
-        Log.i(TAG,"file: "+ file);
+        Log.i(TAG, "file: " + file);
         File[] listFiles = file.listFiles();
-        Log.i(TAG,"listFiles: "+ listFiles.length);
+        Log.i(TAG, "listFiles: " + listFiles.length);
         for (File listFile : listFiles) {
             if (listFile.isDirectory()) {
                 pathArray.add(listFile.getAbsolutePath());
@@ -31,11 +32,12 @@ public class FileSearch {
 
     /**
      * Search a directory and return a list of all **files** contained inside
+     *
      * @param directory
      * @return
      */
 
-    public static ArrayList<String> getFilePaths(String directory){
+    public static ArrayList<String> getFilePaths(String directory) {
         ArrayList<String> pathArray = new ArrayList<>();
         File file = new File(directory);
         File[] listFiles = file.listFiles();

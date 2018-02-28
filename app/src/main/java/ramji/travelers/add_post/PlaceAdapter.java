@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ramji.travelers.R;
 
-public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHolder>{
+public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHolder> {
 
     private static final String TAG = "PlaceAdapter";
 
@@ -22,7 +22,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     private ArrayList<String> placesSec = new ArrayList<>();
     private final onItemClickListener mOnItemClickListener;
 
-    interface onItemClickListener{
+    interface onItemClickListener {
         void onItemClick(int position);
     }
 
@@ -37,7 +37,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     @Override
     public PlaceAdapter.PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_place_adapter,
-                parent,false);
+                parent, false);
 
         return new PlaceViewHolder(view);
     }
@@ -45,8 +45,8 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     @Override
     public void onBindViewHolder(PlaceAdapter.PlaceViewHolder holder, int position) {
 
-        Log.i(TAG,"onBindViewHolder");
-        if (placesPrimary != null){
+        Log.i(TAG, "onBindViewHolder");
+        if (placesPrimary != null) {
             holder.primaryText.setText(placesPrimary.get(position));
             holder.secondaryText.setText(placesSec.get(position));
         }
@@ -54,12 +54,12 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
 
     @Override
     public int getItemCount() {
-        Log.i(TAG,"getItemCount: " + placesPrimary.size());
+        Log.i(TAG, "getItemCount: " + placesPrimary.size());
         return placesPrimary.size();
     }
 
     public class PlaceViewHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener{
+            implements View.OnClickListener {
 
         @BindView(R.id.location_primary_text)
         TextView primaryText;
@@ -70,7 +70,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
 
         public PlaceViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 

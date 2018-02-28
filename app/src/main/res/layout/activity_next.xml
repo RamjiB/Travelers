@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/location"
         android:layout_below="@+id/image_share_LL"
-        android:padding="@dimen/add_post_text"/>
+        android:padding="@dimen/add_post_text" />
 
     <TextView
         android:id="@+id/currentLocation"
@@ -77,20 +77,20 @@
         android:paddingStart="@dimen/add_post_text_padding"
         android:paddingEnd="@dimen/add_post_text_padding"
         android:drawablePadding="@dimen/add_post_text"
-        android:drawableStart="@drawable/ic_pick_location"/>
+        android:drawableStart="@drawable/ic_pick_location" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/location_adapter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/currentLocation"
-        android:padding="@dimen/add_post_text"/>
+        android:padding="@dimen/add_post_text" />
 
     <ProgressBar
         android:id="@+id/mProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
 </RelativeLayout>

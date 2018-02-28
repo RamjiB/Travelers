@@ -28,7 +28,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EditProfileActivity extends AppCompatActivity{
+public class EditProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "EditProfileActivity";
 
@@ -90,7 +90,7 @@ public class EditProfileActivity extends AppCompatActivity{
 
         final Intent intent = getIntent();
         if (intent.hasExtra(IMAGE_URL) && intent.hasExtra(USERNAME) && intent.hasExtra(USER_CITY)
-                && intent.hasExtra(ABOUT_ME)){
+                && intent.hasExtra(ABOUT_ME)) {
             filePath = intent.getStringExtra(IMAGE_URL);
             userName.setText(intent.getStringExtra(USERNAME));
             city.setText(intent.getStringExtra(USER_CITY));
@@ -108,7 +108,7 @@ public class EditProfileActivity extends AppCompatActivity{
         crossImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG,"onClick: closing the gallery fragment");
+                Log.d(TAG, "onClick: closing the gallery fragment");
                 finish();
             }
         });
@@ -133,7 +133,7 @@ public class EditProfileActivity extends AppCompatActivity{
                 String location = city.getText().toString();
                 String about = aboutMe.getText().toString();
 
-                Log.i(TAG,"name: "+ name);
+                Log.i(TAG, "name: " + name);
 
                 progressBar.setVisibility(View.VISIBLE);
 
@@ -141,10 +141,10 @@ public class EditProfileActivity extends AppCompatActivity{
                 if (!Objects.equals(filePath, intent.getStringExtra(IMAGE_URL))) {
                     Log.i(TAG, "filePath: " + filePath);
                     firebaseMethods.uploadProfilePhoto(about, name, filePath, location, progressBar);
-                }else{
-                    firebaseMethods.addProfilePhotoToDatabase(about,name,filePath,location);
-                    Intent intent = new Intent(mContext,HomeActivity.class);
-                    intent.putExtra("fromSignUpActivity",true);
+                } else {
+                    firebaseMethods.addProfilePhotoToDatabase(about, name, filePath, location);
+                    Intent intent = new Intent(mContext, HomeActivity.class);
+                    intent.putExtra("fromSignUpActivity", true);
                     startActivity(intent);
                 }
 
@@ -162,19 +162,19 @@ public class EditProfileActivity extends AppCompatActivity{
         startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
     }
 
-    private void hideSoftKeyboards(){
-        if (getCurrentFocus() != null){
-            InputMethodManager imm =(InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+    private void hideSoftKeyboards() {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
+        switch (requestCode) {
             case 1234:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     Uri selectedImage = data.getData();
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
@@ -185,7 +185,7 @@ public class EditProfileActivity extends AppCompatActivity{
                     filePath = cursor.getString(columnIndex);
                     cursor.close();
 
-                    Log.i(TAG,"filePath: "+ filePath);
+                    Log.i(TAG, "filePath: " + filePath);
                     GlideApp
                             .with(this)
                             .load(filePath)
@@ -201,15 +201,15 @@ public class EditProfileActivity extends AppCompatActivity{
     private void askForPermission() {
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
+                != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},REQUEST_CODE);
-            }else {
+                requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE);
+            } else {
                 ActivityCompat.requestPermissions(this, new String[]{
                         android.Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE);
             }
-        }else{
+        } else {
             storagePermission = true;
         }
 
@@ -222,7 +222,7 @@ public class EditProfileActivity extends AppCompatActivity{
         if (ActivityCompat.checkSelfPermission(this, permissions[0])
                 == PackageManager.PERMISSION_GRANTED) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.i(TAG,"permissionGranted");
+                Log.i(TAG, "permissionGranted");
                 pickImage();
             }
         }

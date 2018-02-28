@@ -32,8 +32,8 @@ public class ImagesGridAdapter extends RecyclerView.Adapter<ImagesGridAdapter
     private ArrayList<String> photo_id = new ArrayList<>();
     private ArrayList<String> fileType = new ArrayList<>();
 
-    interface ImageClickListener{
-        void imageClick(String imageUrl,String postLocation,String description,String photo_id,
+    interface ImageClickListener {
+        void imageClick(String imageUrl, String postLocation, String description, String photo_id,
                         String fileType);
     }
 
@@ -55,7 +55,7 @@ public class ImagesGridAdapter extends RecyclerView.Adapter<ImagesGridAdapter
 
     @Override
     public ImagesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_images_user_profile,parent,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_images_user_profile, parent,
                 false);
         return new ImagesViewHolder(view);
     }
@@ -71,7 +71,7 @@ public class ImagesGridAdapter extends RecyclerView.Adapter<ImagesGridAdapter
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.userImage);
 
-        if (!Objects.equals(fileType.get(position), "image/jpeg")){
+        if (!Objects.equals(fileType.get(position), "image/jpeg")) {
             holder.video_icon.setVisibility(View.VISIBLE);
         }
 
@@ -79,7 +79,7 @@ public class ImagesGridAdapter extends RecyclerView.Adapter<ImagesGridAdapter
 
     @Override
     public int getItemCount() {
-        Log.i(TAG,"getItemCount: "+ imageUrl.size());
+        Log.i(TAG, "getItemCount: " + imageUrl.size());
         return imageUrl.size();
     }
 
@@ -95,7 +95,7 @@ public class ImagesGridAdapter extends RecyclerView.Adapter<ImagesGridAdapter
 
         public ImagesViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 

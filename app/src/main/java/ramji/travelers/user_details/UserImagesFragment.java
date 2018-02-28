@@ -28,11 +28,11 @@ public class UserImagesFragment extends android.support.v4.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_images,container,false);
-        ButterKnife.bind(this,view);
-        Log.i(TAG,"UserImagesFragment");
+        View view = inflater.inflate(R.layout.fragment_user_images, container, false);
+        ButterKnife.bind(this, view);
+        Log.i(TAG, "UserImagesFragment");
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager(),getContext());
         viewPager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewPager);

@@ -110,17 +110,17 @@ public class ImageDetailsView extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent.hasExtra(IMAGE_URL) && intent.hasExtra(POST_LOCATION) &&
                 intent.hasExtra(IMAGE_DESCRIPTION) && intent.hasExtra(PHOTO_ID)
-                && intent.hasExtra(FILE_TYPE)){
+                && intent.hasExtra(FILE_TYPE)) {
             getImageUrl = intent.getStringExtra(IMAGE_URL);
             getPostLocation = intent.getStringExtra(POST_LOCATION);
             getImageDescription = intent.getStringExtra(IMAGE_DESCRIPTION);
             getPhotoId = intent.getStringExtra(PHOTO_ID);
             getFileType = intent.getStringExtra(FILE_TYPE);
-            Log.i(TAG,"imageUrl: "+ getImageUrl);
+            Log.i(TAG, "imageUrl: " + getImageUrl);
 
-        }else{
+        } else {
             getPostLocation = "";
-            getImageDescription ="";
+            getImageDescription = "";
         }
 
         crossImage.setOnClickListener(new View.OnClickListener() {
@@ -130,12 +130,12 @@ public class ImageDetailsView extends AppCompatActivity {
             }
         });
 
-        if (!Objects.equals(getFileType, "image/jpeg")){
+        if (!Objects.equals(getFileType, "image/jpeg")) {
             image.setVisibility(View.INVISIBLE);
             videoView.setVisibility(View.VISIBLE);
             setVideoPlayer();
 
-        }else{
+        } else {
 
             GlideApp
                     .with(this)
@@ -151,7 +151,7 @@ public class ImageDetailsView extends AppCompatActivity {
         try {
             userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
             Log.i(TAG, "userId: " + userId);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -188,69 +188,69 @@ public class ImageDetailsView extends AppCompatActivity {
             });
         }
 
-            notFav.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.N)
-                @Override
-                public void onClick(View v) {
-                    if (Objects.equals(userId, "")) {
+        notFav.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                if (Objects.equals(userId, "")) {
 
-                        Intent intent = new Intent(getBaseContext(),HomeActivity.class);
-                        intent.putExtra("fromSignUpActivity",true);
-                        startActivity(intent);
+                    Intent intent = new Intent(getBaseContext(), HomeActivity.class);
+                    intent.putExtra("fromSignUpActivity", true);
+                    startActivity(intent);
 
-                    } else {
-                        notFav.setVisibility(View.INVISIBLE);
-                        fav.setVisibility(View.VISIBLE);
-                        favourite = true;
+                } else {
+                    notFav.setVisibility(View.INVISIBLE);
+                    fav.setVisibility(View.VISIBLE);
+                    favourite = true;
 
-                        FirebaseMethods firebaseMethods = new FirebaseMethods(getBaseContext());
-                        firebaseMethods.addSavedPhotos(getImageDescription, getPostLocation
-                                , getImageUrl, favourite, getPhotoId, getFileType);
-                        FavouritePlaceUpdatedWidget.startActionUpdateFavWidgets(getBaseContext());
-                    }
+                    FirebaseMethods firebaseMethods = new FirebaseMethods(getBaseContext());
+                    firebaseMethods.addSavedPhotos(getImageDescription, getPostLocation
+                            , getImageUrl, favourite, getPhotoId, getFileType);
+                    FavouritePlaceUpdatedWidget.startActionUpdateFavWidgets(getBaseContext());
                 }
-            });
+            }
+        });
 
 
-            fav.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    notFav.setVisibility(View.VISIBLE);
-                    fav.setVisibility(View.INVISIBLE);
-                    favourite = false;
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                notFav.setVisibility(View.VISIBLE);
+                fav.setVisibility(View.INVISIBLE);
+                favourite = false;
 
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                    Query query = databaseReference.child(getString(R.string.dbname_saved_photos))
-                            .child(userId);
-                    Log.i(TAG, "query: " + query);
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
-                                if (Objects.equals(getPhotoId, singleSnapshot.getKey())) {
-                                    favourite = Boolean.parseBoolean(singleSnapshot
-                                            .child(getString(R.string.favourite))
-                                            .getValue().toString());
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                Query query = databaseReference.child(getString(R.string.dbname_saved_photos))
+                        .child(userId);
+                Log.i(TAG, "query: " + query);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                            if (Objects.equals(getPhotoId, singleSnapshot.getKey())) {
+                                favourite = Boolean.parseBoolean(singleSnapshot
+                                        .child(getString(R.string.favourite))
+                                        .getValue().toString());
 
-                                    Log.i(TAG, "favourite: " + favourite);
+                                Log.i(TAG, "favourite: " + favourite);
 
-                                    if (favourite) {
-                                        singleSnapshot.getRef().removeValue();
-                                        FavouritePlaceUpdatedWidget
-                                                .startActionUpdateFavWidgets(getBaseContext());
-                                    }
+                                if (favourite) {
+                                    singleSnapshot.getRef().removeValue();
+                                    FavouritePlaceUpdatedWidget
+                                            .startActionUpdateFavWidgets(getBaseContext());
                                 }
                             }
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                        }
-                    });
+                    }
+                });
 
-                }
-            });
+            }
+        });
 
     }
 
@@ -265,7 +265,7 @@ public class ImageDetailsView extends AppCompatActivity {
         LoadControl loadControl = new DefaultLoadControl();
 
         //Create player
-        player = ExoPlayerFactory.newSimpleInstance(this,trackSelector,loadControl);
+        player = ExoPlayerFactory.newSimpleInstance(this, trackSelector, loadControl);
 
         //Set media controller
         videoView.setUseController(true);
@@ -283,7 +283,7 @@ public class ImageDetailsView extends AppCompatActivity {
 
         //Produces DataSource instances through which media data is loaded.
         DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(this,
-                Util.getUserAgent(this, "ramji.travelers"), bandwidthMeterA);
+                Util.getUserAgent(this, getString(R.string.authority)), bandwidthMeterA);
 
         //Produces Extractor instances for parsing the media data.
         ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();

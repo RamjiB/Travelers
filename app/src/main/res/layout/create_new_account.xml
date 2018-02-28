@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layoutView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,7 +14,7 @@
         android:padding="@dimen/login_signup_tv_padding"
         android:textSize="@dimen/title_text_size"
         android:textColor="@android:color/black"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal" />
 
     <android.support.design.widget.TextInputEditText
         android:id="@+id/input_userName"
@@ -23,7 +22,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/input_type_size"
         android:inputType="textPersonName"
-        android:hint="@string/user_name"/>
+        android:hint="@string/user_name" />
 
     <android.support.design.widget.TextInputEditText
         android:id="@+id/input_email"
@@ -31,7 +30,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/input_type_size"
         android:inputType="textEmailAddress"
-        android:hint="@string/email"/>
+        android:hint="@string/email" />
 
     <android.support.design.widget.TextInputEditText
         android:id="@+id/input_password"
@@ -39,7 +38,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/input_type_size"
         android:inputType="textPassword"
-        android:hint="@string/password"/>
+        android:hint="@string/password" />
 
     <Button
         android:id="@+id/signUp"
@@ -47,7 +46,7 @@
         android:layout_height="wrap_content"
         android:text="@string/signup"
         android:backgroundTint="@color/colorPrimary"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
 

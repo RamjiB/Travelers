@@ -6,5 +6,5 @@ import com.bumptech.glide.module.AppGlideModule;
 
 
 @GlideModule
-public class TravelersGlideModule extends AppGlideModule{
+public class TravelersGlideModule extends AppGlideModule {
 }

@@ -30,9 +30,9 @@ public class PostImagesAdapter extends RecyclerView.Adapter<PostImagesAdapter
     private ArrayList<String> photo_id = new ArrayList<>();
     private ArrayList<String> fileType = new ArrayList<>();
 
-    interface ImageClickListener{
-        void imageClick(String imageUrl,String postLocation,String description,
-                        String photo_id,String fileType);
+    interface ImageClickListener {
+        void imageClick(String imageUrl, String postLocation, String description,
+                        String photo_id, String fileType);
     }
 
     public PostImagesAdapter(Context mContext, ImageClickListener imageClickListener,
@@ -50,7 +50,7 @@ public class PostImagesAdapter extends RecyclerView.Adapter<PostImagesAdapter
 
     @Override
     public MasonryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_images,parent,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_images, parent,
                 false);
         return new MasonryViewHolder(view);
     }
@@ -66,7 +66,7 @@ public class PostImagesAdapter extends RecyclerView.Adapter<PostImagesAdapter
                 .into(holder.postedImage);
 
         holder.postLocation.setText(location.get(position));
-        if (!Objects.equals(fileType.get(position), "image/jpeg")){
+        if (!Objects.equals(fileType.get(position), "image/jpeg")) {
             holder.video_icon.setVisibility(View.VISIBLE);
         }
 
@@ -91,7 +91,7 @@ public class PostImagesAdapter extends RecyclerView.Adapter<PostImagesAdapter
 
         public MasonryViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 
@@ -99,7 +99,7 @@ public class PostImagesAdapter extends RecyclerView.Adapter<PostImagesAdapter
         public void onClick(View v) {
 
             imageClickListener.imageClick(imageUrl.get(getAdapterPosition()),
-                    location.get(getAdapterPosition()),caption.get(getAdapterPosition()),
+                    location.get(getAdapterPosition()), caption.get(getAdapterPosition()),
                     photo_id.get(getAdapterPosition()),
                     fileType.get(getAdapterPosition()));
         }

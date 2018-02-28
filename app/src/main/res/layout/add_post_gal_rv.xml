@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -25,7 +24,7 @@
             android:layout_width="@dimen/spinner_width"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:layout_toEndOf="@id/crossImage"/>
+            android:layout_toEndOf="@id/crossImage" />
 
         <TextView
             android:id="@+id/add_post_next"
@@ -42,12 +41,11 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/user_images_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/nextBar"/>
+        android:layout_below="@id/nextBar" />
 
     <Button
         android:id="@+id/openCameraBt"
@@ -55,14 +53,15 @@
         android:layout_height="wrap_content"
         android:text="@string/open_camera"
         android:layout_centerInParent="true"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <SurfaceView
-        android:id="@+id/videoView"        android:layout_width="match_parent"
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/image_post_ht"
         android:layout_below="@id/nextBar"
         android:src="@drawable/ic_camera_capture"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/capture_video"
@@ -73,7 +72,7 @@
         android:layout_marginTop="@dimen/capture_icon_top_margin"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/capturing_video"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
 
 </RelativeLayout>

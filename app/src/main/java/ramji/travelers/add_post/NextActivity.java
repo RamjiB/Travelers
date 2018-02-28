@@ -63,7 +63,7 @@ import ramji.travelers.R;
 
 @SuppressWarnings("ALL")
 public class NextActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
-    GoogleApiClient.OnConnectionFailedListener,PlaceAdapter.onItemClickListener{
+        GoogleApiClient.OnConnectionFailedListener, PlaceAdapter.onItemClickListener {
 
     private static final String TAG = "NextActivity";
     private static final String IMAGE_URL = "imageUrl";
@@ -147,8 +147,8 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
 
         locationAdapter.setLayoutManager(new LinearLayoutManager(this));
 
-        mGeoDataClient = Places.getGeoDataClient(this,null);
-        mPlaceDetectionClient = Places.getPlaceDetectionClient(this,null);
+        mGeoDataClient = Places.getGeoDataClient(this, null);
+        mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
 
         buildGoogleApiClient();
         mLocationRequest = new LocationRequest()
@@ -157,16 +157,16 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
         crossImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG,"onClick: closing the gallery fragment");
+                Log.d(TAG, "onClick: closing the gallery fragment");
                 finish();
             }
         });
 
-        if (getIntent().hasExtra(IMAGE_URL)){
+        if (getIntent().hasExtra(IMAGE_URL)) {
 
             imageUrl = getIntent().getStringExtra(IMAGE_URL);
 
-            Log.i(TAG,"imageUrl: "+ imageUrl);
+            Log.i(TAG, "imageUrl: " + imageUrl);
 
             GlideApp
                     .with(this)
@@ -184,8 +184,8 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
                     String location = mLocation.getText().toString();
 
                     progressBar.setVisibility(View.VISIBLE);
-                    mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo),caption,
-                            imageCount,imageUrl,location,progressBar);
+                    mFirebaseMethods.uploadNewPhoto(getString(R.string.new_photo), caption,
+                            imageCount, imageUrl, location, progressBar);
                 }
             });
 
@@ -227,8 +227,8 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
                         PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
                         CharSequence address = "";
                         for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                            address =  placeLikelihood.getPlace().getAddress();
-                            Log.i(TAG,"address: "+ address);
+                            address = placeLikelihood.getPlace().getAddress();
+                            Log.i(TAG, "address: " + address);
                         }
                         likelyPlaces.release();
 
@@ -257,26 +257,26 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
         });
     }
 
-    private void retrievePlaces(CharSequence s){
-        Log.i(TAG,"retrievePlaces");
+    private void retrievePlaces(CharSequence s) {
+        Log.i(TAG, "retrievePlaces");
 
         AutocompleteFilter filter = new AutocompleteFilter.Builder()
                 .setTypeFilter(AutocompleteFilter.TYPE_FILTER_NONE)
                 .build();
 
         Task<AutocompletePredictionBufferResponse> results = mGeoDataClient
-                .getAutocompletePredictions(s.toString(),null,filter);
+                .getAutocompletePredictions(s.toString(), null, filter);
 
-        Log.i(TAG,"result:" + results);
+        Log.i(TAG, "result:" + results);
 
         results.addOnCompleteListener(new OnCompleteListener<AutocompletePredictionBufferResponse>() {
             @Override
             public void onComplete(@NonNull Task<AutocompletePredictionBufferResponse> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
 
-                    Log.i(TAG,"result Successful");
+                    Log.i(TAG, "result Successful");
                     prediction = task.getResult();
-                    Log.i(TAG,"prediction: "+ prediction.getCount());
+                    Log.i(TAG, "prediction: " + prediction.getCount());
                     placesPrimary = new ArrayList<>(prediction.getCount());
                     placesSecondary = new ArrayList<>(prediction.getCount());
                     for (int i = 0; i < prediction.getCount(); i++) {
@@ -286,11 +286,11 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
 
                     Log.i(TAG, "places: " + placesPrimary);
 
-                    placeAdapter = new PlaceAdapter(placesPrimary,placesSecondary,onItemClickListener);
+                    placeAdapter = new PlaceAdapter(placesPrimary, placesSecondary, onItemClickListener);
                     locationAdapter.setAdapter(placeAdapter);
 
-                }else
-                    Log.e(TAG,"task failed: "+ task.getException());
+                } else
+                    Log.e(TAG, "task failed: " + task.getException());
             }
         });
     }
@@ -358,8 +358,8 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
                         PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
                         CharSequence address = "";
                         for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                            address =  placeLikelihood.getPlace().getAddress();
-                            Log.i(TAG,"address: "+ address);
+                            address = placeLikelihood.getPlace().getAddress();
+                            Log.i(TAG, "address: " + address);
                         }
                         likelyPlaces.release();
 
@@ -368,10 +368,11 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
                 });
             }
 
-        }if (ActivityCompat.checkSelfPermission(mContext,permissions[1]) ==
-                PackageManager.PERMISSION_GRANTED){
+        }
+        if (ActivityCompat.checkSelfPermission(mContext, permissions[1]) ==
+                PackageManager.PERMISSION_GRANTED) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.i(TAG,"permission granted");
+                Log.i(TAG, "permission granted");
             }
         }
     }
@@ -433,12 +434,12 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
      * Setup the firebase auth object
      */
 
-    private void setupFirebaseAuth(){
-        Log.d(TAG,"setupFirebaseAuth: setting up firebase auth.");
+    private void setupFirebaseAuth() {
+        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
         mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = mFirebaseDatabase.getReference();
-        Log.d(TAG,"onDataChange: image count: "+ imageCount);
+        Log.d(TAG, "onDataChange: image count: " + imageCount);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -461,7 +462,7 @@ public class NextActivity extends AppCompatActivity implements GoogleApiClient.C
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 imageCount = mFirebaseMethods.getImageCount(dataSnapshot);
-                Log.d(TAG,"onDataChange: image count: "+ imageCount);
+                Log.d(TAG, "onDataChange: image count: " + imageCount);
             }
 
             @Override

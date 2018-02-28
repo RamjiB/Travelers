@@ -49,7 +49,7 @@ import static android.app.Activity.RESULT_OK;
 
 @SuppressWarnings("ALL")
 public class AddPostTabFragment extends android.support.v4.app.Fragment implements
-        GalleryImagesGridAdapter.ImageClickListener,SurfaceHolder.Callback,View.OnClickListener{
+        GalleryImagesGridAdapter.ImageClickListener, SurfaceHolder.Callback, View.OnClickListener {
 
     private static final String TAG = "AddPostTabFragment";
 
@@ -103,10 +103,10 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
     @BindView(R.id.videoView)
     SurfaceView videoView;
 
-    public static AddPostTabFragment getInstance(int position){
+    public static AddPostTabFragment getInstance(int position) {
 
         Bundle bundle = new Bundle();
-        bundle.putInt("position",position);
+        bundle.putInt("position", position);
         AddPostTabFragment tabFragment = new AddPostTabFragment();
         tabFragment.setArguments(bundle);
         return tabFragment;
@@ -116,11 +116,11 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i(TAG,"Tab Fragment: onCreate");
-        if (getArguments() != null){
+        Log.i(TAG, "Tab Fragment: onCreate");
+        if (getArguments() != null) {
 
             position = getArguments().getInt("position");
-            Log.i(TAG,"position: "+ position);
+            Log.i(TAG, "position: " + position);
         }
 
     }
@@ -130,16 +130,16 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.add_post_gal_rv,container,false);
-        ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.add_post_gal_rv, container, false);
+        ButterKnife.bind(this, view);
         imageClickListener = this;
 
-        Log.i(TAG,"Tab Fragment: onCreateView");
+        Log.i(TAG, "Tab Fragment: onCreateView");
 
         crossImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG,"onClick: closing the gallery fragment");
+                Log.d(TAG, "onClick: closing the gallery fragment");
                 getActivity().finish();
             }
         });
@@ -155,7 +155,7 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
             }
         });
 
-        switch (position){
+        switch (position) {
 
             case GALLERY:
                 askForPermission();
@@ -173,8 +173,8 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
                     @Override
                     public void onClick(View v) {
                         askForPermission();
-                        Log.i(TAG,"writeStoragePermission: "+ writeStoragePermission);
-                        Log.i(TAG,"cameraPermission: "+ cameraPermission);
+                        Log.i(TAG, "writeStoragePermission: " + writeStoragePermission);
+                        Log.i(TAG, "cameraPermission: " + cameraPermission);
                         if (cameraPermission && writeStoragePermission)
                             cameraView();
                     }
@@ -199,7 +199,7 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void startVideoRecording() throws IOException {
         mCamera = getCameraInstance();
-        Log.i(TAG,"startVideoRecording");
+        Log.i(TAG, "startVideoRecording");
 
         mediaRecorder = new MediaRecorder();
         holder = videoView.getHolder();
@@ -211,7 +211,7 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
     }
 
     private void cameraView() {
-        Log.i(TAG,"cameraView");
+        Log.i(TAG, "cameraView");
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
 
@@ -223,7 +223,7 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
             }
             if (photoFile != null) {
                 Uri photoUri = FileProvider.getUriForFile(getContext(),
-                        "ramji.travelers",
+                        getString(R.string.authority),
                         photoFile);
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(cameraIntent, IMAGE_REQUEST_CODE);
@@ -246,14 +246,14 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
         directories.addAll(Dcim);
 
         ArrayList<String> directoryNames = new ArrayList<>();
-        for (int i = 0; i < directories.size();i++){
-            int index = directories.get(i).lastIndexOf("/")+1;
+        for (int i = 0; i < directories.size(); i++) {
+            int index = directories.get(i).lastIndexOf("/") + 1;
             String string = directories.get(i).substring(index);
             directoryNames.add(string);
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_item,directoryNames);
+                android.R.layout.simple_spinner_item, directoryNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDirectory.setAdapter(adapter);
 
@@ -268,7 +268,7 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
 
                 GalleryImagesGridAdapter adapter = new GalleryImagesGridAdapter(getContext(),
                         imageClickListener
-                        ,imageUrls);
+                        , imageUrls);
                 imagesRecyclerView.setAdapter(adapter);
 
             }
@@ -282,7 +282,7 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
 
     private void askForPermission() {
 
-        Log.i(TAG,"askForPermission");
+        Log.i(TAG, "askForPermission");
 
         if (ActivityCompat.checkSelfPermission(getContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -299,7 +299,7 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                     Manifest.permission.READ_EXTERNAL_STORAGE) &&
                     ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE)  &&
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
                     ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                             Manifest.permission.CAMERA) &&
                     ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
@@ -318,10 +318,10 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
                         Manifest.permission.RECORD_AUDIO
                 }, REQUEST_CODE);
             }
-        }else{
+        } else {
             readStoragePermission = true;
             cameraPermission = true;
-            writeStoragePermission =true;
+            writeStoragePermission = true;
         }
 
     }
@@ -333,52 +333,52 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
         if (ActivityCompat.checkSelfPermission(getActivity(), permissions[0])
                 == PackageManager.PERMISSION_GRANTED) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.i(TAG,"permissionGranted");
+                Log.i(TAG, "permissionGranted");
                 galleryView();
                 readStoragePermission = true;
             }
         }
-        if (ActivityCompat.checkSelfPermission(getActivity(),permissions[1]) ==
-                PackageManager.PERMISSION_GRANTED){
-            if (grantResults.length>0 && grantResults[1] == PackageManager.PERMISSION_GRANTED){
-                Log.i(TAG,"write storage Permission granted");
+        if (ActivityCompat.checkSelfPermission(getActivity(), permissions[1]) ==
+                PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 0 && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                Log.i(TAG, "write storage Permission granted");
                 writeStoragePermission = true;
             }
         }
-        if (ActivityCompat.checkSelfPermission(getActivity(),permissions[2]) ==
-                PackageManager.PERMISSION_GRANTED){
-            if (grantResults.length>0 && grantResults[2] == PackageManager.PERMISSION_GRANTED){
-                Log.i(TAG,"camera Permission granted");
+        if (ActivityCompat.checkSelfPermission(getActivity(), permissions[2]) ==
+                PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 0 && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+                Log.i(TAG, "camera Permission granted");
                 cameraPermission = true;
             }
         }
-        if (ActivityCompat.checkSelfPermission(getActivity(),permissions[3]) ==
-                PackageManager.PERMISSION_GRANTED){
-            if (grantResults.length>0 && grantResults[3] == PackageManager.PERMISSION_GRANTED){
-                Log.i(TAG,"audio Permission granted");
+        if (ActivityCompat.checkSelfPermission(getActivity(), permissions[3]) ==
+                PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 0 && grantResults[3] == PackageManager.PERMISSION_GRANTED) {
+                Log.i(TAG, "audio Permission granted");
                 cameraPermission = true;
             }
         }
 
-        Log.i(TAG,"readStoragePermission: "+ readStoragePermission);
-        Log.i(TAG,"writeStoragePermission: "+ writeStoragePermission);
-        Log.i(TAG,"cameraPermission: "+ cameraPermission);
+        Log.i(TAG, "readStoragePermission: " + readStoragePermission);
+        Log.i(TAG, "writeStoragePermission: " + writeStoragePermission);
+        Log.i(TAG, "cameraPermission: " + cameraPermission);
     }
 
     @Override
     public void imageClick(String imageUrl) {
 
         mSelectedImage = imageUrl;
-        Log.i(TAG,"mSelectedImage: "+ mSelectedImage);
+        Log.i(TAG, "mSelectedImage: " + mSelectedImage);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.i(TAG,"onActivityResult: ");
+        Log.i(TAG, "onActivityResult: ");
 
-        if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK){
+        if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
 
             Intent mediaIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             File file = new File(capturedPhotoPath);
@@ -386,7 +386,7 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
             mediaIntent.setData(uri);
             getActivity().sendBroadcast(mediaIntent);
 
-            Log.i(TAG,"file: "+ file);
+            Log.i(TAG, "file: " + file);
             mSelectedImage = String.valueOf(file);
             if (mSelectedImage != null) {
                 Intent intent = new Intent(getContext(), NextActivity.class);
@@ -398,12 +398,12 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
     }
 
     private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
-        String imageFileName = "TRAV_JPEG_"+ timeStamp +"_";
+        String timeStamp = new SimpleDateFormat(getString(R.string.date_format), Locale.US).format(new Date());
+        String imageFileName = getString(R.string.image_name) + timeStamp + "_";
         File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,
-                ".jpg",
+                getString(R.string.image_format),
                 storageDir
         );
 
@@ -413,7 +413,7 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Log.i(TAG,"surfaceCreated");
+        Log.i(TAG, "surfaceCreated");
         if (mediaRecorder != null)
             prepareRecorder();
     }
@@ -426,8 +426,8 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
 
-        Log.i(TAG,"surfaceDestroyed");
-        if (recording){
+        Log.i(TAG, "surfaceDestroyed");
+        if (recording) {
             mediaRecorder.stop();
             recording = false;
             mCamera.stopPreview();
@@ -440,8 +440,8 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
     @Override
     public void onClick(View v) {
 
-        Log.i(TAG,"VideoView: onClick");
-        if (recording){
+        Log.i(TAG, "VideoView: onClick");
+        if (recording) {
             videoCaptureIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_camera_capture));
             mediaRecorder.stop();
             recording = false;
@@ -449,7 +449,7 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
             mediaRecorder = null;
             mCamera.stopPreview();
             mCamera.release();
-        }else {
+        } else {
             recording = true;
             try {
                 startVideoRecording();
@@ -459,17 +459,17 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
             videoCaptureIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_stop_bt));
             initRecorder();
             String file = new FilePaths().PICTURES +
-                    "/Travelers" + System.currentTimeMillis() + ".mp4";
+                    getString(R.string.video_name) + System.currentTimeMillis() + getString(R.string.video_format);
             mediaRecorder.setOutputFile(file);
             mSelectedImage = file;
-            Log.i(TAG,"mSelectedImage: "+ mSelectedImage);
-           prepareRecorder();
+            Log.i(TAG, "mSelectedImage: " + mSelectedImage);
+            prepareRecorder();
             mediaRecorder.start();
         }
     }
 
     private void prepareRecorder() {
-        Log.i(TAG,"prepareRecorder");
+        Log.i(TAG, "prepareRecorder");
         mediaRecorder.setPreviewDisplay(holder.getSurface());
         try {
             mediaRecorder.prepare();
@@ -481,9 +481,9 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initRecorder() {
 
-        if (mediaRecorder != null){
+        if (mediaRecorder != null) {
 
-                Log.i(TAG, "initRecorder");
+            Log.i(TAG, "initRecorder");
             mCamera.unlock();
             mediaRecorder.setCamera(mCamera);
             mediaRecorder.setPreviewDisplay(holder.getSurface());
@@ -507,8 +507,7 @@ public class AddPostTabFragment extends android.support.v4.app.Fragment implemen
         android.hardware.Camera c = null;
         try {
             c = android.hardware.Camera.open(); // attempt to get a Camera instance
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             // Camera is not available (in use or does not exist)
         }
         return c; // returns null if camera is unavailable

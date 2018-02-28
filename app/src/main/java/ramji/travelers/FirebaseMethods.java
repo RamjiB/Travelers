@@ -50,7 +50,7 @@ public class FirebaseMethods {
 
     private double mPhotoUploadProgress;
 
-    public FirebaseMethods(Context context){
+    public FirebaseMethods(Context context) {
 
         mContext = context;
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -58,20 +58,20 @@ public class FirebaseMethods {
         mAuth = FirebaseAuth.getInstance();
         mStorageRefernece = FirebaseStorage.getInstance().getReference();
 
-        if (mAuth.getCurrentUser() != null){
+        if (mAuth.getCurrentUser() != null) {
 
             userID = mAuth.getCurrentUser().getUid();
 
         }
     }
 
-    public int getImageCount(DataSnapshot datasnapshot){
+    public int getImageCount(DataSnapshot datasnapshot) {
 
         int count = 0;
-        for (DataSnapshot ds: datasnapshot
+        for (DataSnapshot ds : datasnapshot
                 .child(mContext.getString(R.string.dbname_user_photos))
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .getChildren()){
+                .getChildren()) {
             count++;
         }
 
@@ -80,18 +80,18 @@ public class FirebaseMethods {
 
     public void registerNewEmail(final String username, final String email, String password) {
 
-        mAuth.createUserWithEmailAndPassword(email,password)
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.i(TAG,"created User with email and password: "+ task.isSuccessful());
-                        if (!task.isSuccessful()){
-                            Log.e(TAG,mContext.getString(R.string.account_creation_failed));
-                        }else{
+                        Log.i(TAG, "created User with email and password: " + task.isSuccessful());
+                        if (!task.isSuccessful()) {
+                            Log.e(TAG, mContext.getString(R.string.account_creation_failed));
+                        } else {
                             sendVerificationEmail();
 
                             userID = mAuth.getCurrentUser().getUid();
-                            Log.d(TAG,"onComplete: authState changed: "+ userID);
+                            Log.d(TAG, "onComplete: authState changed: " + userID);
 
                             Users users = new Users();
                             users.setUsername(username);
@@ -104,7 +104,7 @@ public class FirebaseMethods {
                                     .child(userID)
                                     .setValue(users);
 
-                            Log.i(TAG,"added to database");
+                            Log.i(TAG, "added to database");
                         }
                     }
                 });
@@ -118,11 +118,11 @@ public class FirebaseMethods {
             user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()){
-                        Toast.makeText(mContext,mContext.getString(R.string.verification_Email_sent),
+                    if (task.isSuccessful()) {
+                        Toast.makeText(mContext, mContext.getString(R.string.verification_Email_sent),
                                 Toast.LENGTH_SHORT).show();
-                    }else{
-                        Log.e(TAG,"Failed to send Email");
+                    } else {
+                        Log.e(TAG, "Failed to send Email");
                     }
                 }
             });
@@ -130,25 +130,25 @@ public class FirebaseMethods {
     }
 
     public void uploadNewPhoto(String photoType, final String caption, int count,
-                               final String imgUrl, final String location, final ProgressBar progressBar){
+                               final String imgUrl, final String location, final ProgressBar progressBar) {
 
-        Log.d(TAG,"uploadNewPhoto: attempting to upload a new photo");
+        Log.d(TAG, "uploadNewPhoto: attempting to upload a new photo");
 
         FilePaths filePaths = new FilePaths();
 
         //case 1: new photo
 
-        if (photoType.equals(mContext.getString(R.string.new_photo))){
-            Log.d(TAG,"uploadNewPhoto: uploading NEW photo");
+        if (photoType.equals(mContext.getString(R.string.new_photo))) {
+            Log.d(TAG, "uploadNewPhoto: uploading NEW photo");
 
             String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
             StorageReference storageReference = mStorageRefernece
-                    .child(filePaths.FIREBASE_IMAGE_STORAGE +"/"+ user_id + "/photo" + (count +1));
+                    .child(filePaths.FIREBASE_IMAGE_STORAGE + "/" + user_id + "/photo" + (count + 1));
 
             Uri file = Uri.fromFile(new File(imgUrl));
 
             UploadTask uploadTask;
-            uploadTask =storageReference.putFile(file);
+            uploadTask = storageReference.putFile(file);
 
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -158,11 +158,12 @@ public class FirebaseMethods {
                     String fileType = taskSnapshot.getMetadata().getContentType();
                     Uri firebaseUrl = taskSnapshot.getDownloadUrl();
 
-                    Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, mContext.getString(R.string.photo_upload_success),
+                            Toast.LENGTH_SHORT).show();
 
                     // add the new photo to 'photos' node and 'users_photo' node
 
-                    addPhotoToDatabase(caption,location, firebaseUrl.toString(),fileType);
+                    addPhotoToDatabase(caption, location, firebaseUrl.toString(), fileType);
 
                     //navigate to the main feed so the user cans ee their photo
                     progressBar.setVisibility(View.INVISIBLE);
@@ -175,21 +176,22 @@ public class FirebaseMethods {
                 @Override
                 public void onFailure(@NonNull Exception e) {
 
-                    Log.d(TAG,"onFailure: photo upload failed");
-                    Toast.makeText(mContext, "photo upload failed", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onFailure: photo upload failed");
+                    Toast.makeText(mContext, mContext.getString(R.string.photo_upload_failed),
+                            Toast.LENGTH_SHORT).show();
 
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
 
-                    double progress = (100 * taskSnapshot.getBytesTransferred())/ taskSnapshot.getTotalByteCount();
+                    double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
 
-                    if (progress - 15 > mPhotoUploadProgress){
-                        Toast.makeText(mContext, mContext.getString(R.string.photo_upload_progress)+ String.format(Locale.ENGLISH,"%.0f",progress) + "%", Toast.LENGTH_SHORT).show();
+                    if (progress - 15 > mPhotoUploadProgress) {
+                        Toast.makeText(mContext, mContext.getString(R.string.photo_upload_progress) + String.format(Locale.ENGLISH, "%.0f", progress) + "%", Toast.LENGTH_SHORT).show();
                         mPhotoUploadProgress = progress;
                     }
-                    Log.d(TAG,"onProgress: upload progress: "+ progress+ " % done");
+                    Log.d(TAG, "onProgress: upload progress: " + progress + " % done");
                 }
             });
 
@@ -197,22 +199,22 @@ public class FirebaseMethods {
     }
 
     public void uploadProfilePhoto(final String aboutMe, final String profileName,
-                                   final String imgUrl, final String location, final ProgressBar progressBar){
+                                   final String imgUrl, final String location, final ProgressBar progressBar) {
 
         //case 2: new profile photo
 
         FilePaths filePaths = new FilePaths();
 
-        Log.d(TAG,"uploadNewPhoto: uploading new PROFILE photo");
+        Log.d(TAG, "uploadNewPhoto: uploading new PROFILE photo");
 
         String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         StorageReference storageReference = mStorageRefernece
-                .child(filePaths.FIREBASE_IMAGE_STORAGE +"/"+ user_id + "/profile_photo" );
+                .child(filePaths.FIREBASE_IMAGE_STORAGE + "/" + user_id + "/profile_photo");
 
         Uri file = Uri.fromFile(new File(imgUrl));
 
         UploadTask uploadTask;
-        uploadTask =storageReference.putFile(file);
+        uploadTask = storageReference.putFile(file);
 
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -221,13 +223,13 @@ public class FirebaseMethods {
 
                 Uri firebaseUrl = taskSnapshot.getDownloadUrl();
 
-                Toast.makeText(mContext, "photo upload success", Toast.LENGTH_SHORT).show();
-                addProfilePhotoToDatabase(aboutMe,profileName,firebaseUrl.toString(),location);
+                Toast.makeText(mContext, mContext.getString(R.string.photo_upload_success), Toast.LENGTH_SHORT).show();
+                addProfilePhotoToDatabase(aboutMe, profileName, firebaseUrl.toString(), location);
 
                 progressBar.setVisibility(View.INVISIBLE);
 
-                Intent intent = new Intent(mContext,HomeActivity.class);
-                intent.putExtra("fromSignUpActivity",true);
+                Intent intent = new Intent(mContext, HomeActivity.class);
+                intent.putExtra("fromSignUpActivity", true);
                 mContext.startActivity(intent);
 
             }
@@ -235,34 +237,33 @@ public class FirebaseMethods {
             @Override
             public void onFailure(@NonNull Exception e) {
 
-                Log.d(TAG,"onFailure: photo upload failed");
-                Toast.makeText(mContext, "photo upload failed", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailure: photo upload failed");
+                Toast.makeText(mContext, mContext.getString(R.string.photo_upload_failed), Toast.LENGTH_SHORT).show();
 
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
 
-                double progress = (100 * taskSnapshot.getBytesTransferred())/ taskSnapshot.getTotalByteCount();
+                double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
 
-                if (progress - 15 > mPhotoUploadProgress){
-                    Toast.makeText(mContext, mContext.getString(R.string.photo_upload_progress)+
-                            String.format(Locale.ENGLISH,"%.0f",progress)+ "%", Toast.LENGTH_SHORT).show();
+                if (progress - 15 > mPhotoUploadProgress) {
+                    Toast.makeText(mContext, mContext.getString(R.string.photo_upload_progress) +
+                            String.format(Locale.ENGLISH, "%.0f", progress) + "%", Toast.LENGTH_SHORT).show();
                     mPhotoUploadProgress = progress;
                 }
-                Log.d(TAG,"onProgress: upload progress: "+ progress+ " % done");
+                Log.d(TAG, "onProgress: upload progress: " + progress + " % done");
             }
         });
-
 
 
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void addSavedPhotos(String caption, String location, String url,boolean favourite,
-                               String photoKey,String fileType){
-        Log.d(TAG,"addPhotoToDatabase: adding photo to database");
+    public void addSavedPhotos(String caption, String location, String url, boolean favourite,
+                               String photoKey, String fileType) {
+        Log.d(TAG, "addPhotoToDatabase: adding photo to database");
 
         Photo photo = new Photo();
         photo.setCaption(caption);
@@ -281,11 +282,10 @@ public class FirebaseMethods {
     }
 
 
-
     public void addProfilePhotoToDatabase(String aboutMe, String profileName,
-                                           String imgUrl, String location) {
+                                          String imgUrl, String location) {
 
-        Log.d(TAG,"addProfilePhotoToDatabase: adding photo to database");
+        Log.d(TAG, "addProfilePhotoToDatabase: adding photo to database");
 
         Users users = new Users();
         users.setUsername(profileName);
@@ -301,7 +301,7 @@ public class FirebaseMethods {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void addPhotoToDatabase(String caption,String location, String url,String fileType){
+    private void addPhotoToDatabase(String caption, String location, String url, String fileType) {
 
 
         String newPhotoKey = myRef.child(mContext.getString(R.string.dbname_photos)).push().getKey();
@@ -323,7 +323,7 @@ public class FirebaseMethods {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private String getTimeStamp(){
+    private String getTimeStamp() {
 
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss'Z'");

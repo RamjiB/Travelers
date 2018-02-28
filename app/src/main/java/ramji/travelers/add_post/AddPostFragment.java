@@ -29,11 +29,11 @@ public class AddPostFragment extends android.support.v4.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_post,container,false);
-        ButterKnife.bind(this,view);
-        Log.i(TAG,"AddPostFragment");
+        View view = inflater.inflate(R.layout.fragment_add_post, container, false);
+        ButterKnife.bind(this, view);
+        Log.i(TAG, "AddPostFragment");
 
-        AddPostViewPagerAdapter adapter = new AddPostViewPagerAdapter(getFragmentManager());
+        AddPostViewPagerAdapter adapter = new AddPostViewPagerAdapter(getFragmentManager(),getContext());
         viewPager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewPager);

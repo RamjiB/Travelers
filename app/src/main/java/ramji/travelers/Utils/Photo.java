@@ -4,7 +4,7 @@ package ramji.travelers.Utils;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Photo implements Parcelable{
+public class Photo implements Parcelable {
 
     private String caption;
     private String date_created;

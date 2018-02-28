@@ -25,7 +25,7 @@ public class AddPost extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         FragmentManager fm = getSupportFragmentManager();
         AddPostFragment addPostFragment = new AddPostFragment();
-        fm.beginTransaction().add(R.id.add_post_fragment,addPostFragment).commit();
+        fm.beginTransaction().add(R.id.add_post_fragment, addPostFragment).commit();
 
     }
 }

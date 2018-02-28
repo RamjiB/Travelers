@@ -4,7 +4,7 @@ package ramji.travelers.Utils;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Users implements Parcelable{
+public class Users implements Parcelable {
 
     private String username;
     private String user_id;

@@ -31,7 +31,7 @@ import ramji.travelers.R;
 import ramji.travelers.image_details.ImageDetailsView;
 
 public class TabFragment extends android.support.v4.app.Fragment implements
-        ImagesGridAdapter.ImageClickListener{
+        ImagesGridAdapter.ImageClickListener {
 
     private static final String TAG = "AddPostTabFragment";
 
@@ -50,10 +50,10 @@ public class TabFragment extends android.support.v4.app.Fragment implements
     @BindView(R.id.mProgressBar)
     ProgressBar mProgressBar;
 
-    public static TabFragment getInstance(int position){
+    public static TabFragment getInstance(int position) {
 
         Bundle bundle = new Bundle();
-        bundle.putInt("position",position);
+        bundle.putInt("position", position);
         TabFragment tabFragment = new TabFragment();
         tabFragment.setArguments(bundle);
         return tabFragment;
@@ -63,11 +63,11 @@ public class TabFragment extends android.support.v4.app.Fragment implements
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i(TAG,"Tab Fragment: onCreate");
-        if (getArguments() != null){
+        Log.i(TAG, "Tab Fragment: onCreate");
+        if (getArguments() != null) {
 
             position = getArguments().getInt("position");
-            Log.i(TAG,"position: "+ position);
+            Log.i(TAG, "position: " + position);
         }
 
     }
@@ -76,22 +76,22 @@ public class TabFragment extends android.support.v4.app.Fragment implements
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.tab_rv_images,container,false);
-        ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.tab_rv_images, container, false);
+        ButterKnife.bind(this, view);
         imageClickListener = this;
 
-        Log.i(TAG,"Tab Fragment: onCreateView");
+        Log.i(TAG, "Tab Fragment: onCreateView");
 
         mProgressBar.setVisibility(View.VISIBLE);
         GridLayoutManager gridLayoutManager;
         if (getResources().getBoolean(R.bool.is_phone))
-            gridLayoutManager = new GridLayoutManager(getContext(),3);
+            gridLayoutManager = new GridLayoutManager(getContext(), 3);
         else
-            gridLayoutManager = new GridLayoutManager(getContext(),5);
+            gridLayoutManager = new GridLayoutManager(getContext(), 5);
 
         imagesRecyclerView.setLayoutManager(gridLayoutManager);
 
-        switch(position){
+        switch (position) {
             case 0:
                 getImageUrlsAndLocation(getString(R.string.dbname_user_photos));
                 break;
@@ -115,7 +115,7 @@ public class TabFragment extends android.support.v4.app.Fragment implements
         if (Objects.equals(photoType, getString(R.string.dbname_saved_photos))) {
             query = databaseReference.child(getString(R.string.dbname_saved_photos))
                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        }else{
+        } else {
             query = databaseReference.child(getString(R.string.dbname_user_photos))
                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         }
@@ -123,10 +123,10 @@ public class TabFragment extends android.support.v4.app.Fragment implements
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
+                    for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                         imageUrls.add(singleSnapshot.child(getString(R.string.db_image_path))
                                 .getValue().toString());
-                        Log.i(TAG,"imageUrls: "+ imageUrls);
+                        Log.i(TAG, "imageUrls: " + imageUrls);
                         location.add(singleSnapshot.child(getString(R.string.db_location))
                                 .getValue().toString());
                         caption.add(singleSnapshot.child(getString(R.string.db_caption))
@@ -142,7 +142,7 @@ public class TabFragment extends android.support.v4.app.Fragment implements
                             imageClickListener,
                             imageUrls,
                             location,
-                            caption,photo_id,fileType);
+                            caption, photo_id, fileType);
                     imagesRecyclerView.setAdapter(adapter);
                     mProgressBar.setVisibility(View.INVISIBLE);
 
@@ -158,7 +158,7 @@ public class TabFragment extends android.support.v4.app.Fragment implements
 
     @Override
     public void imageClick(String imageUrl, String postLocation, String description,
-                           String photo_id,String fileType) {
+                           String photo_id, String fileType) {
 
         if (getResources().getBoolean(R.bool.is_phone)) {
 
@@ -169,7 +169,7 @@ public class TabFragment extends android.support.v4.app.Fragment implements
             intent.putExtra(PHOTO_ID, photo_id);
             intent.putExtra(FILE_TYPE, fileType);
             startActivity(intent);
-        }else{
+        } else {
 
             Intent intent = new Intent(getContext(), HomeActivity.class);
             intent.putExtra(IMAGE_URL, imageUrl);

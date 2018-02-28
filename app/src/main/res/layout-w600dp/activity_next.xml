@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,96 +13,96 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/nextBar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:padding="@dimen/add_post_text_padding"
-        android:background="@drawable/bottom_border">
-
-        <ImageView
-            android:id="@+id/crossImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_cross"
-            android:layout_centerVertical="true"
-            android:contentDescription="@string/cross_image_description" />
-
-        <TextView
-            android:id="@+id/add_post_share"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/nextBar"
+            android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:gravity="center_vertical"
-            android:layout_alignParentEnd="true"
-            android:text="@string/share"
-            android:textSize="@dimen/add_post_text"
-            android:textColor="@android:color/black"
-            android:drawablePadding="@dimen/add_post_text_padding"
-            android:drawableEnd="@drawable/ic_arrow_forward_black_24dp"
-            tools:ignore="RelativeOverlap" />
+            android:padding="@dimen/add_post_text_padding"
+            android:background="@drawable/bottom_border">
 
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/image_share_LL"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="2"
-        android:orientation="horizontal"
-        android:layout_below="@id/nextBar"
-        android:padding="@dimen/add_post_text_padding">
-
-        <ImageView
-            android:id="@+id/shareImageView"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="@dimen/share_image_padding"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/share_image" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/imageDescriptionTV"
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/crossImage"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:hint="@string/about_image"
-                android:textSize="@dimen/image_description_tv" />
-
-            <AutoCompleteTextView
-                android:id="@+id/location_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/location"
-                android:textSize="@dimen/location_text_size"
-                android:padding="@dimen/add_post_text"/>
+                android:src="@drawable/ic_cross"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/cross_image_description" />
 
             <TextView
-                android:id="@+id/currentLocation"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/current_location_text_size"
-                android:text="@string/currentLocation"
+                android:id="@+id/add_post_share"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
                 android:gravity="center_vertical"
-                android:paddingStart="@dimen/add_post_text_padding"
-                android:paddingEnd="@dimen/add_post_text_padding"
-                android:drawablePadding="@dimen/add_post_text"
-                android:drawableStart="@drawable/ic_pick_location"/>
+                android:layout_alignParentEnd="true"
+                android:text="@string/share"
+                android:textSize="@dimen/add_post_text"
+                android:textColor="@android:color/black"
+                android:drawablePadding="@dimen/add_post_text_padding"
+                android:drawableEnd="@drawable/ic_arrow_forward_black_24dp"
+                tools:ignore="RelativeOverlap" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/location_adapter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/add_post_text_padding"
-                android:padding="@dimen/add_post_text"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/image_share_LL"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_below="@id/nextBar"
+            android:padding="@dimen/add_post_text_padding">
+
+            <ImageView
+                android:id="@+id/shareImageView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="@dimen/share_image_padding"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/share_image" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/imageDescriptionTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:hint="@string/about_image"
+                    android:textSize="@dimen/image_description_tv" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/location_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/location"
+                    android:textSize="@dimen/location_text_size"
+                    android:padding="@dimen/add_post_text" />
+
+                <TextView
+                    android:id="@+id/currentLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/current_location_text_size"
+                    android:text="@string/currentLocation"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/add_post_text_padding"
+                    android:paddingEnd="@dimen/add_post_text_padding"
+                    android:drawablePadding="@dimen/add_post_text"
+                    android:drawableStart="@drawable/ic_pick_location" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/location_adapter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/add_post_text_padding"
+                    android:padding="@dimen/add_post_text" />
+            </LinearLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
 
     </RelativeLayout>
 
@@ -112,6 +111,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
 </android.support.v7.widget.CardView>

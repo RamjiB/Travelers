@@ -175,7 +175,8 @@ public class HomeActivity extends AppCompatActivity {
                         .add(R.id.fragmentPart, postsFragment).commit();
             } else {
 
-                fm.beginTransaction().replace(R.id.fragmentPart, profileLoginFragment).commit();
+                fm.beginTransaction().replace(R.id.fragmentPart, profileLoginFragment)
+                        .addToBackStack(null).commit();
                 profile.setBackgroundColor(getColor(R.color.colorPrimary));
                 posts.setBackgroundColor(getColor(R.color.white));
 
@@ -192,10 +193,11 @@ public class HomeActivity extends AppCompatActivity {
                         getResources().getDimension(R.dimen.raised_button_pressed_elevation));
                 posts.setElevation(
                         getResources().getDimension(R.dimen.raised_button_resting_elevation));
-                Log.i(TAG,"postFragment not added");
+                Log.i(TAG, "postFragment not added");
                 profileLoginFragment = new ProfileLoginFragment();
                 fm.beginTransaction()
-                        .replace(R.id.fragmentPart, profileLoginFragment).commit();
+                        .replace(R.id.fragmentPart, profileLoginFragment)
+                        .addToBackStack(null).commit();
 
             }
 
@@ -217,7 +219,7 @@ public class HomeActivity extends AppCompatActivity {
         if (!getResources().getBoolean(R.bool.is_phone)) {
 
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            Log.i(TAG,"tabletView: "+ getResources().getBoolean(R.bool.is_phone));
+            Log.i(TAG, "tabletView: " + getResources().getBoolean(R.bool.is_phone));
             addPostFAB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -229,7 +231,8 @@ public class HomeActivity extends AppCompatActivity {
                         profile.setBackgroundColor(getColor(R.color.colorPrimary));
                         posts.setBackgroundColor(getColor(R.color.white));
                         fm.beginTransaction()
-                                .replace(R.id.fragmentPart, profileLoginFragment).commit();
+                                .replace(R.id.fragmentPart, profileLoginFragment)
+                                .addToBackStack(null).commit();
                     }
                 }
             });
@@ -251,7 +254,7 @@ public class HomeActivity extends AppCompatActivity {
                 imageDetailsForTabView();
             }
 
-        }else{
+        } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
@@ -265,12 +268,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        if (!Objects.equals(getFileType, "image/jpeg")){
+        if (!Objects.equals(getFileType, "image/jpeg")) {
             image.setVisibility(View.INVISIBLE);
             videoView.setVisibility(View.VISIBLE);
             setVideoPlayer();
 
-        }else{
+        } else {
 
             GlideApp
                     .with(this)
@@ -286,7 +289,7 @@ public class HomeActivity extends AppCompatActivity {
         try {
             userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
             Log.i(TAG, "userId: " + userId);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -329,8 +332,8 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (Objects.equals(userId, "")) {
 
-                    Intent intent = new Intent(getBaseContext(),HomeActivity.class);
-                    intent.putExtra("fromSignUpActivity",true);
+                    Intent intent = new Intent(getBaseContext(), HomeActivity.class);
+                    intent.putExtra("fromSignUpActivity", true);
                     startActivity(intent);
 
                 } else {
@@ -400,7 +403,7 @@ public class HomeActivity extends AppCompatActivity {
         LoadControl loadControl = new DefaultLoadControl();
 
         //Create player
-        player = ExoPlayerFactory.newSimpleInstance(this,trackSelector,loadControl);
+        player = ExoPlayerFactory.newSimpleInstance(this, trackSelector, loadControl);
 
         //Set media controller
         videoView.setUseController(true);
@@ -480,10 +483,10 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu,menu);
+        menuInflater.inflate(R.menu.menu, menu);
 
         MenuItem menuItem = menu.findItem(R.id.menu_add);
-        if (!getResources().getBoolean(R.bool.is_phone)){
+        if (!getResources().getBoolean(R.bool.is_phone)) {
             menuItem.setVisible(false);
         }
         return true;
@@ -493,22 +496,23 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_add:
-                if (mAuth.getCurrentUser() != null){
+                if (mAuth.getCurrentUser() != null) {
                     Intent intent = new Intent(HomeActivity.this, AddPost.class);
                     startActivity(intent);
-                }else{
+                } else {
                     profileLoginFragment = new ProfileLoginFragment();
                     profile.setBackgroundColor(getColor(R.color.colorPrimary));
                     posts.setBackgroundColor(getColor(R.color.white));
                     fm.beginTransaction()
-                            .replace(R.id.fragmentPart, profileLoginFragment).commit();
+                            .replace(R.id.fragmentPart, profileLoginFragment)
+                            .addToBackStack(null).commit();
                 }
                 return true;
 
             case R.id.menu_signOut:
-                if (mAuth.getCurrentUser() != null){
+                if (mAuth.getCurrentUser() != null) {
                     mAuth.signOut();
                     return true;
                 }
@@ -527,9 +531,9 @@ public class HomeActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
 
                 if (user != null)
-                    Log.d(TAG,"onAuthStateChanged: signed_in "+ user.getUid());
+                    Log.d(TAG, "onAuthStateChanged: signed_in " + user.getUid());
                 else
-                    Log.d(TAG,"onAuthStateChanged: signed_out");
+                    Log.d(TAG, "onAuthStateChanged: signed_out");
             }
         };
     }
@@ -554,4 +558,17 @@ public class HomeActivity extends AppCompatActivity {
             player.release();
     }
 
+    @Override
+    public void onBackPressed() {
+        profile.setBackgroundColor(getColor(R.color.white));
+        posts.setBackgroundColor(getColor(R.color.colorPrimary));
+        profile.setElevation(
+                getResources().getDimension(R.dimen.raised_button_resting_elevation));
+        if (getFragmentManager().getBackStackEntryCount() == 0)
+            super.onBackPressed();
+        else {
+            getFragmentManager().popBackStack();
+        }
+
+    }
 }

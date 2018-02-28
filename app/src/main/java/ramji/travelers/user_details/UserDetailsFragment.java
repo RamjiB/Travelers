@@ -64,21 +64,21 @@ public class UserDetailsFragment extends android.support.v4.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_details,container,false);
-        ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.fragment_user_details, container, false);
+        ButterKnife.bind(this, view);
 
         mProgressBar.setVisibility(View.VISIBLE);
-        Log.i(TAG,"UserDetailsFragment");
+        Log.i(TAG, "UserDetailsFragment");
         setProfileImage();
         setOtherDetails();
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), EditProfileActivity.class);
-                intent.putExtra(IMAGE_URL,imageUrl);
-                intent.putExtra(USERNAME,username);
-                intent.putExtra(USER_CITY,userCity);
-                intent.putExtra(ABOUT_ME,aboutUser);
+                intent.putExtra(IMAGE_URL, imageUrl);
+                intent.putExtra(USERNAME, username);
+                intent.putExtra(USER_CITY, userCity);
+                intent.putExtra(ABOUT_ME, aboutUser);
                 startActivity(intent);
             }
         });
@@ -93,10 +93,10 @@ public class UserDetailsFragment extends android.support.v4.app.Fragment {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
 
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    if (Objects.equals(userId, singleSnapshot.getKey())){
+                    if (Objects.equals(userId, singleSnapshot.getKey())) {
                         username = singleSnapshot
                                 .child(getString(R.string.username))
                                 .getValue().toString();
@@ -131,11 +131,11 @@ public class UserDetailsFragment extends android.support.v4.app.Fragment {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
 
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    if (Objects.equals(userId, singleSnapshot.getKey())){
-                          imageUrl = singleSnapshot
+                    if (Objects.equals(userId, singleSnapshot.getKey())) {
+                        imageUrl = singleSnapshot
                                 .child(getString(R.string.profile_image_path))
                                 .getValue().toString();
 

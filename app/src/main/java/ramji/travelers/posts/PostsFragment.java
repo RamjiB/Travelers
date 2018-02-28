@@ -30,7 +30,7 @@ import ramji.travelers.R;
 import ramji.travelers.image_details.ImageDetailsView;
 
 public class PostsFragment extends android.support.v4.app.Fragment implements
-        PostImagesAdapter.ImageClickListener{
+        PostImagesAdapter.ImageClickListener {
 
     private static final String TAG = "PostsFragment";
     private static final String IMAGE_URL = "imageUrl";
@@ -53,8 +53,8 @@ public class PostsFragment extends android.support.v4.app.Fragment implements
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_post,container,false);
-        ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.fragment_post, container, false);
+        ButterKnife.bind(this, view);
 
         imageClickListener = this;
         imageHolder.setHasFixedSize(true);
@@ -77,7 +77,7 @@ public class PostsFragment extends android.support.v4.app.Fragment implements
 
     private void getImageUrlsAndLocation() {
 
-        Log.i(TAG,"getImageUrlsAndLocation");
+        Log.i(TAG, "getImageUrlsAndLocation");
 
         final ArrayList<String> imageUrls = new ArrayList<>();
         final ArrayList<String> location = new ArrayList<>();
@@ -118,6 +118,7 @@ public class PostsFragment extends android.support.v4.app.Fragment implements
                     }
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -128,7 +129,7 @@ public class PostsFragment extends android.support.v4.app.Fragment implements
 
     @Override
     public void imageClick(String imageUrl, String postLocation,
-                           String description,String photo_id,String fileType) {
+                           String description, String photo_id, String fileType) {
 
         if (getResources().getBoolean(R.bool.is_phone)) {
 
@@ -139,7 +140,7 @@ public class PostsFragment extends android.support.v4.app.Fragment implements
             intent.putExtra(PHOTO_ID, photo_id);
             intent.putExtra(FILE_TYPE, fileType);
             startActivity(intent);
-        }else{
+        } else {
 
             Intent intent = new Intent(getContext(), HomeActivity.class);
             intent.putExtra(IMAGE_URL, imageUrl);

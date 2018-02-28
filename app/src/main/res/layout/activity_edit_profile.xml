@@ -52,7 +52,7 @@
         android:textColor="@android:color/black"
         android:textSize="@dimen/EP_text_size"
         android:layout_marginStart="@dimen/EP_padding"
-        android:layout_marginEnd="@dimen/EP_padding"/>
+        android:layout_marginEnd="@dimen/EP_padding" />
 
     <EditText
         android:id="@+id/EP_aboutUser"
@@ -62,7 +62,8 @@
         android:textColor="@android:color/black"
         android:textSize="@dimen/EP_text_size"
         android:layout_marginStart="@dimen/EP_padding"
-        android:layout_marginEnd="@dimen/EP_padding"/>
+        android:layout_marginEnd="@dimen/EP_padding" />
+
     <EditText
         android:id="@+id/EP_userCity"
         android:layout_width="match_parent"
@@ -71,13 +72,13 @@
         android:textColor="@android:color/black"
         android:textSize="@dimen/EP_text_size"
         android:layout_marginStart="@dimen/EP_padding"
-        android:layout_marginEnd="@dimen/EP_padding"/>
+        android:layout_marginEnd="@dimen/EP_padding" />
 
     <ProgressBar
         android:id="@+id/mProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
 </LinearLayout>

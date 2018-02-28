@@ -60,6 +60,26 @@
     <string name="not_favourite_description">not favourite</string>
     <string name="favourite_descrip">favourite</string>
     <string name="add_new_fab">Add new FAB</string>
+    <string name="photo_upload_failed">photo upload failed</string>
+    <string name="photo_upload_success">photo upload success</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="ask_for_password_reset">Do you want to reset your password?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="reset_link_to_email">Reset Link sent to your email</string>
+    <string name="user_not_registered">user not registered</string>
+    <string name="email_not_verified">Email is not verified   check your inbox</string>
+    <string name="authority">ramji.travelers</string>
+    <string name="date_format">yyyyMMdd_HHmmss</string>
+    <string name="image_name">TRAV_JPEG_</string>
+    <string name="video_format">.mp4</string>
+    <string name="video_name">/Travelers</string>
+    <string name="image_format">.jpg</string>
+    <string name="gallery">GALLERY</string>
+    <string name="camera">CAMERA</string>
+    <string name="video">VIDEO</string>
+    <string name="shared">Shared</string>
+    <string name="saved">Saved</string>
 
 
 </resources>

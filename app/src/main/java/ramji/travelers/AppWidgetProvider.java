@@ -17,43 +17,42 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
-        Log.i(TAG,"widget onUpdate");
+        Log.i(TAG, "widget onUpdate");
         FavouritePlaceUpdatedWidget.startActionUpdateFavWidgets(context);
 
     }
 
-    public static void updateAppWidget(Context context,AppWidgetManager appWidgetManager,
-                                       ArrayList<String> location,int[] appWidgetIds) {
-        Log.i(TAG,"widget updateAppWidget");
+    public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                       ArrayList<String> location, int[] appWidgetIds) {
+        Log.i(TAG, "widget updateAppWidget");
         // update each of the app widgets with the remote adapter
         for (int appWidgetId : appWidgetIds) {
-            Log.i(TAG,"location size: "+ location.size());
-            updateAppFavWidget(context,appWidgetManager,location,appWidgetId);
+            Log.i(TAG, "location size: " + location.size());
+            updateAppFavWidget(context, appWidgetManager, location, appWidgetId);
         }
 
     }
 
     private static void updateAppFavWidget(Context context, AppWidgetManager appWidgetManager,
-                                           ArrayList<String> location,int appWidgetId) {
+                                           ArrayList<String> location, int appWidgetId) {
 
-        Log.i(TAG,"widget updateAppFavWidget");
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(),R.layout.appwidget);
+        Log.i(TAG, "widget updateAppFavWidget");
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.appwidget);
 
-        Intent intent = new Intent(context,HomeActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,0);
-        Log.i(TAG,"location size: "+ location.size());
-        String location_list  = "";
-        for (int i = 0; i < location.size(); i++){
-            int position = i+1;
-            Log.i(TAG,"updateAppFavWidget: " + location.get(i));
-            location_list = location_list + position  +". " + location.get(i) +" \n";
-            remoteViews.setTextViewText(R.id.text_View,location_list);
+        Intent intent = new Intent(context, HomeActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        Log.i(TAG, "location size: " + location.size());
+        String location_list = "";
+        for (int i = 0; i < location.size(); i++) {
+            int position = i + 1;
+            Log.i(TAG, "updateAppFavWidget: " + location.get(i));
+            location_list = location_list + position + ". " + location.get(i) + " \n";
+            remoteViews.setTextViewText(R.id.text_View, location_list);
         }
-        Log.i(TAG,"location_list: "+ location.toString());
-        remoteViews.setOnClickPendingIntent(R.id.text_View,pendingIntent);
-        appWidgetManager.updateAppWidget(appWidgetId,remoteViews);
+        Log.i(TAG, "location_list: " + location.toString());
+        remoteViews.setOnClickPendingIntent(R.id.text_View, pendingIntent);
+        appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
     }
-
 
 
 }

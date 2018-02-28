@@ -3,8 +3,8 @@ apply plugin: 'com.android.application'
 android {
 
     signingConfigs {
-        config{
-            storeFile file ( 'C:/Users/Ramji/Desktop/Travelers/keystore.jks' )
+        config {
+            storeFile file('C:/Users/Ramji/Desktop/Travelers/keystore.jks')
             keyAlias 'key0'
             keyPassword RELEASE_KEY_PASSWORD
             storePassword RELEASE_STORE_PASSWORD
