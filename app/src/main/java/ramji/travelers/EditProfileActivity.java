@@ -134,6 +134,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 String about = aboutMe.getText().toString();
 
                 Log.i(TAG, "name: " + name);
+                Log.i(TAG, "location: " + location);
+                Log.i(TAG, "about: " + about);
 
                 progressBar.setVisibility(View.VISIBLE);
 

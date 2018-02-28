@@ -171,14 +171,19 @@ public class HomeActivity extends AppCompatActivity {
 
             if (!fromSignUpActivity) {
                 postsFragment = new PostsFragment();
-                fm.beginTransaction()
-                        .add(R.id.fragmentPart, postsFragment).commit();
+                if (postsFragment != null) {
+                    fm.beginTransaction()
+                            .add(R.id.fragmentPart, postsFragment).commit();
+                }
             } else {
 
-                fm.beginTransaction().replace(R.id.fragmentPart, profileLoginFragment)
-                        .addToBackStack(null).commit();
-                profile.setBackgroundColor(getColor(R.color.colorPrimary));
-                posts.setBackgroundColor(getColor(R.color.white));
+                profileLoginFragment = new ProfileLoginFragment();
+                if (profileLoginFragment != null) {
+                    fm.beginTransaction().replace(R.id.fragmentPart, profileLoginFragment)
+                            .addToBackStack(null).commit();
+                    profile.setBackgroundColor(getColor(R.color.colorPrimary));
+                    posts.setBackgroundColor(getColor(R.color.white));
+                }
 
             }
         }
